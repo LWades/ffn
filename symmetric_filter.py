@@ -90,6 +90,22 @@ class SymmetricFilter:
         return True, max_num
 
 
+    # return False 有
+    # return True 没有
+    def filter_eval(self, syndrome):
+        num = 1
+        symmetric_syndrome = SymmetricSyndrome(self.d, syndrome, self.s_types)
+        if symmetric_syndrome in self.symmetric_dicts:
+            num = self.symmetric_dicts[symmetric_syndrome]
+            if num >= rep_limit:
+                return False, num
+            else:
+                self.add(symmetric_syndrome)
+                return False, num
+        else:
+            self.add(symmetric_syndrome)
+            return True, num
+
     def get_size(self):
         return self.symmetric_dicts.__len__()
 
@@ -118,7 +134,7 @@ def sym_eval():
             num_sum_repeat += 1
             if num_repeat > num_max_repeat:
                 num_max_repeat = num_repeat
-        log(num_sum_repeat)
+        print(num_sum_repeat, end='\r')
     return num_sum_repeat, num_max_repeat
 
 
@@ -184,7 +200,7 @@ if __name__ == '__main__':
 # nohup python3 symmetric_filter.py --zip 1 --limit 4000 --c_type torc --d 5 --p 0.040 --trnsz 5000000 --sym 'tl' > logs/symmetric_filter_3.log &
 # nohup python3 symmetric_filter.py --zip 1 --limit 1000 --c_type torc --d 5 --p 0.040 --trnsz 5000000 --sym 'tl' > logs/symmetric_filter_10.log &
 # nohup python3 symmetric_filter.py --zip 1 --limit 3000 --c_type torc --d 5 --p 0.010 --trnsz 5000000 --sym 'tl' > logs/symmetric_filter_11.log &
-# nohup python3 symmetric_filter.py --zip 0 --limit 1 --c_type torc --d 7 --p 0.010 --trnsz 10000000 --sym 'tl' > logs/symmetric_filter_4.log &
+# nohup python3 symmetric_filter.py --zip 0 --limit 1 --c_type torc --d 7 --p 0.010 --trnsz 10000000 --sym 'tl' > logs/symmetric_filter_5.log &
 
 # symmetric_filter = SymmetricFilter(d, s_types, rep_limit)
 #
