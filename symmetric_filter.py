@@ -129,7 +129,7 @@ def sym_eval():
     symmetric_filter = SymmetricFilter(d, s_types, rep_limit)
     syndromes, logical_errors = get_data(file_name)
     for i in tqdm(range(len(syndromes))):
-        result, num_repeat = symmetric_filter.filter(syndromes[i])
+        result, num_repeat = symmetric_filter.filter_eval(syndromes[i])
         if not result:
             num_sum_repeat += 1
             if num_repeat > num_max_repeat:
