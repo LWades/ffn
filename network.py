@@ -4,19 +4,25 @@ import torchvision
 import torchvision.transforms as transforms
 import config as configs
 from args import args
+from utils import log
 
 
 CONFIGS = {
     'ffn': configs.get_ffn_torc(),
+    'cnn_sur_7': configs.get_cnn_sur_7(),
 }
-config = CONFIGS['ffn']
 
-input_size = config.input_size
-hidden_size = config.hidden_size
-num_classes = config.num_classes
-num_epochs = config.num_epochs
-batch_size = config.batch_size
-learning_rate = config.learning_rate
+if args.nn == 'fnn':
+    config = CONFIGS['ffn']
+elif args.nn == 'cnn':
+    config = CONFIGS['cnn_sur_7']
+
+input_size = CONFIGS['ffn'].input_size
+hidden_size = CONFIGS['ffn'].hidden_size
+num_classes = CONFIGS['ffn'].num_classes
+num_epochs = CONFIGS['ffn'].num_epochs
+batch_size = CONFIGS['ffn'].batch_size
+learning_rate = CONFIGS['ffn'].learning_rate
 
 
 class NeuralNet(nn.Module):
@@ -57,17 +63,29 @@ class CNN(nn.Module):
 
         self.conv_layers = nn.ModuleList()
         for i in range(CL):
-            in_channels = 3 if i == 0 else 32 * (2 ** (i - 1))
+            in_channels = 1 if i == 0 else 32 * (2 ** (i - 1))
             out_channels = 32 * (2 ** i)
             self.conv_layers.append(nn.Conv2d(in_channels, out_channels, kernel_size=3, padding=1))
             self.conv_layers.append(nn.ReLU())
-            self.conv_layers.append(nn.MaxPool2d(kernel_size=2, stride=2))
+            self.conv_layers.append(nn.BatchNorm2d(out_channels))
+
+            if args.d > 3:
+                self.conv_layers.append(nn.MaxPool2d(kernel_size=2, stride=2))
 
         self.flatten = nn.Flatten()
         self.dense_layers = nn.ModuleList()
 
         # 计算卷积层输出的维度以连接到全连接层
-        self.conv_output_size = out_channels * (64 // 2 ** CL) * (64 // 2 ** CL)
+        # self.conv_output_size = out_channels * (64 // 2 ** CL) * (64 // 2 ** CL)
+        # out_channels = 32 * (2 ** (CL - 1))
+        # feature_map_size = 64 // (2 ** (CL // 2))
+        # self.conv_output_size = out_channels * feature_map_size * feature_map_size
+        if args.d == 3:
+            feature_map_size = 5
+            self.conv_output_size = out_channels * feature_map_size * feature_map_size
+        else:
+            feature_map_size = 2 * args.d - 1
+            self.conv_output_size = out_channels * (feature_map_size // 2 ** CL) * (feature_map_size // 2 ** CL)
 
         for i in range(DL):
             in_features = self.conv_output_size if i == 0 else N
@@ -75,6 +93,7 @@ class CNN(nn.Module):
             self.dense_layers.append(nn.ReLU())
 
         self.output_layer = nn.Linear(N, output_size)
+
 
     def forward(self, x):
         for layer in self.conv_layers:
@@ -116,8 +135,14 @@ class SimpleRNN(nn.Module):
 # model = SimpleRNN(input_size, hidden_size, output_size)
 # print(model)
 
+
 def get_model():
-    model = FNN(input_size, hidden_size, num_classes)
+    if args.nn == 'fnn':
+        model = FNN(input_size, hidden_size, num_classes)
+    elif args.nn == 'cnn':
+        log("init cnn...")
+        model = CNN(config.CL, config.DL, config.N, 4)
+        log("init cnn... Done.")
     return model
 
 

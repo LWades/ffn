@@ -28,35 +28,35 @@ class SymmetricFilter:
             if s_type == 'tl':
                 if symmetric_syndrome not in self.symmetric_dicts:
                     self.symmetric_dicts[symmetric_syndrome] = 1
-                else:
+                elif self.symmetric_dicts[symmetric_syndrome] < self.rep_limit:
                     self.symmetric_dicts[symmetric_syndrome] += 1
             elif s_type == 'rf:0':
                 bs = copy.deepcopy(symmetric_syndrome)
                 bs.syndrome = symmetric_syndrome.reflection_syndrome(0)
                 if bs not in self.symmetric_dicts:
                     self.symmetric_dicts[bs] = 1
-                else:
+                elif self.symmetric_dicts[symmetric_syndrome] < self.rep_limit:
                     self.symmetric_dicts[bs] += 1
             elif s_type == 'rf:1':
                 bs = copy.deepcopy(symmetric_syndrome)
                 bs.syndrome = symmetric_syndrome.reflection_syndrome(1)
                 if bs not in self.symmetric_dicts:
                     self.symmetric_dicts[bs] = 1
-                else:
+                elif self.symmetric_dicts[symmetric_syndrome] < self.rep_limit:
                     self.symmetric_dicts[bs] += 1
             elif s_type == 'rf:2':
                 bs = copy.deepcopy(symmetric_syndrome)
                 bs.syndrome = symmetric_syndrome.reflection_syndrome(2)
                 if bs not in self.symmetric_dicts:
                     self.symmetric_dicts[bs] = 1
-                else:
+                elif self.symmetric_dicts[symmetric_syndrome] < self.rep_limit:
                     self.symmetric_dicts[bs] += 1
             elif s_type == 'rf:3':
                 bs = copy.deepcopy(symmetric_syndrome)
                 bs.syndrome = symmetric_syndrome.reflection_syndrome(3)
                 if bs not in self.symmetric_dicts:
                     self.symmetric_dicts[bs] = 1
-                else:
+                elif self.symmetric_dicts[symmetric_syndrome] < self.rep_limit:
                     self.symmetric_dicts[bs] += 1
 
     """
@@ -65,29 +65,15 @@ class SymmetricFilter:
 
     def filter(self, syndrome):
         symmetric_syndrome = SymmetricSyndrome(self.d, syndrome, self.s_types)
-        max_num = 1
-        for s_type in self.s_types:
-            if s_type == 'tl':
-                if symmetric_syndrome in self.symmetric_dicts:
-                    num = self.symmetric_dicts[symmetric_syndrome]
-                    if num >= rep_limit:
-                        # log("translation: exist in dict and exceed the limit")
-                        return False, num
-                    else:
-                        # log("translation: exist in dict but not exceed the limit")
-                        max_num = max(max_num, num)
-            else:
-                if symmetric_syndrome in self.symmetric_dicts:
-                    num = self.symmetric_dicts[symmetric_syndrome]
-                    if num >= rep_limit:
-                        # log("exist in dict and exceed the limit")
-                        return False, num
-                    else:
-                        # log("other symmetry: exist in dict and exceed the limit")
-                        max_num = max(max_num, num)
+        num = 1
+        if symmetric_syndrome in self.symmetric_dicts:
+            num = self.symmetric_dicts[symmetric_syndrome]
+            if num >= rep_limit:
+                # log("translation: exist in dict and exceed the limit")
+                return False, num
         # 过了这么多关，可以加入到训练集了，把它所有对称的都加进去
         self.add(symmetric_syndrome)
-        return True, max_num
+        return True, num
 
 
     # return False 有
@@ -200,7 +186,18 @@ if __name__ == '__main__':
 # nohup python3 symmetric_filter.py --zip 1 --limit 4000 --c_type torc --d 5 --p 0.040 --trnsz 5000000 --sym 'tl' > logs/symmetric_filter_3.log &
 # nohup python3 symmetric_filter.py --zip 1 --limit 1000 --c_type torc --d 5 --p 0.040 --trnsz 5000000 --sym 'tl' > logs/symmetric_filter_10.log &
 # nohup python3 symmetric_filter.py --zip 1 --limit 3000 --c_type torc --d 5 --p 0.010 --trnsz 5000000 --sym 'tl' > logs/symmetric_filter_11.log &
-# nohup python3 symmetric_filter.py --zip 0 --limit 1 --c_type torc --d 7 --p 0.010 --trnsz 10000000 --sym 'tl' > logs/symmetric_filter_5.log &
+# nohup python3 symmetric_filter.py --zip 0 --c_type torc --d 7 --p 0.010 --trnsz 10000000 --sym 'tl' > logs/symmetric_filter_5.log &
+# nohup python3 symmetric_filter.py --zip 0 --c_type torc --d 7 --p 0.010 --trnsz 10000000 --sym 'rf:0' > logs/symmetric_filter_7.log &
+# nohup python3 symmetric_filter.py --zip 0 --c_type torc --d 7 --p 0.050 --trnsz 10000000 --sym 'tl' > logs/symmetric_filter_6.log &
+# nohup python3 symmetric_filter.py --zip 0 --c_type torc --d 3 --p 0.010 --trnsz 10000000 --sym 'tl' > logs/symmetric_filter_8.log &
+# nohup python3 symmetric_filter.py --zip 0 --c_type torc --d 3 --p 0.050 --trnsz 10000000 --sym 'tl' > logs/symmetric_filter_9.log &
+# nohup python3 symmetric_filter.py --zip 0 --c_type torc --d 3 --p 0.100 --trnsz 10000000 --sym 'tl' > logs/symmetric_filter_11.log &
+# nohup python3 symmetric_filter.py --zip 0 --c_type torc --d 3 --p 0.150 --trnsz 10000000 --sym 'tl' > logs/symmetric_filter_10.log &
+# nohup python3 symmetric_filter.py --zip 0 --c_type torc --d 3 --p 0.010 --trnsz 10000000 --sym 'rf:0' > logs/symmetric_filter_12.log &
+# nohup python3 symmetric_filter.py --zip 0 --c_type torc --d 3 --p 0.050 --trnsz 10000000 --sym 'rf:0' > logs/symmetric_filter_13.log &
+# nohup python3 symmetric_filter.py --zip 0 --c_type torc --d 3 --p 0.100 --trnsz 10000000 --sym 'rf:0' > logs/symmetric_filter_14.log &
+# nohup python3 symmetric_filter.py --zip 0 --c_type torc --d 3 --p 0.150 --trnsz 10000000 --sym 'rf:0' > logs/symmetric_filter_16.log &
+# nohup python3 symmetric_filter.py --zip 0 --c_type torc --d 5 --p 0.010 --trnsz 10000000 --sym 'rf:0' > logs/symmetric_filter_15.log &
 
 # symmetric_filter = SymmetricFilter(d, s_types, rep_limit)
 #

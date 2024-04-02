@@ -1,6 +1,6 @@
 from args import args
 from network import get_model
-from data_process import get_loader
+from data_process import get_loader, get_loader_sur_img
 import config as configs
 from utils import log
 import wandb
@@ -41,6 +41,58 @@ def set_seed(args):
     np.random.seed(args.seed)
     torch.manual_seed(args.seed)
     torch.cuda.manual_seed_all(args.seed)
+
+
+def valid_1d(args, model, test_loader, global_step):
+    # Validation!
+    eval_losses = AverageMeter()
+    model.eval()
+    all_preds, all_label = [], []
+    epoch_iterator = tqdm(test_loader,
+                          desc="Validating... (loss=X.X)",
+                          bar_format="{l_bar}{r_bar}",
+                          dynamic_ncols=True)
+    loss_fct = torch.nn.CrossEntropyLoss()
+    for step, batch in enumerate(epoch_iterator):
+        batch = tuple(t.to(device) for t in batch)
+        x, y = batch
+        # x = x.to(torch.float16)
+        # y = y.to(torch.long)
+        y = torch.squeeze(y)
+        y = y.to(torch.long)
+        with torch.no_grad():
+            logits = model(x)
+            # logits = model(x)[0]
+            # log(f"logits shape: {logits.shape}")
+            # log(f"y shape: {y.shape}")
+
+            eval_loss = loss_fct(logits, y)
+            eval_losses.update(eval_loss.item())
+
+            preds = torch.argmax(logits, dim=-1)
+
+        if len(all_preds) == 0:
+            all_preds.append(preds.detach().cpu().numpy())
+            all_label.append(y.detach().cpu().numpy())
+        else:
+            all_preds[0] = np.append(
+                all_preds[0], preds.detach().cpu().numpy(), axis=0
+            )
+            all_label[0] = np.append(
+                all_label[0], y.detach().cpu().numpy(), axis=0
+            )
+        epoch_iterator.set_description("Validating... (loss=%2.5f)" % eval_losses.val)
+
+    all_preds, all_label = all_preds[0], all_label[0]
+    accuracy = (all_preds == all_label).mean()
+
+    log("Valid Loss: %2.5f" % eval_losses.avg)
+    log("Valid Accuracy: %2.5f" % accuracy)
+    wandb.log({'valid_loss': eval_losses.avg, 'valid_accuracy': accuracy})
+
+    return accuracy
+
+
 
 
 def valid(args, model, test_loader, global_step):
@@ -91,20 +143,17 @@ def valid(args, model, test_loader, global_step):
     return accuracy
 
 
-wandb_name = f"d{args.d}_p{args.p}_trnsz{args.trnsz}_ep{args.epoch}"
+wandb_name = f"{args.nn}_d{args.d}_p{args.p}_trnsz{args.trnsz}_ep{args.epoch}"
 if args.zip == 1:
     wandb_name += f"_zip_limit{args.limit}"
 wandb.init(
-    project="ffn",
+    project="work02",
     name=wandb_name,
     config={
         'd': args.d,
         'p': args.p,
         'train size': args.trnsz,
         'epoch': args.epoch,
-        'hidden size': config.hidden_size,
-        'hidden layer': config.hidden_layer,
-        'learning rate': config.learning_rate
     }
 )
 
@@ -113,9 +162,17 @@ device = torch.device('cuda:{}'.format(args.gpu) if torch.cuda.is_available() el
 
 model = get_model()
 model.to(device)
-trainloader, testloader = get_loader()
+if args.nn == 'cnn':
+    trainloader, testloader = get_loader_sur_img()
+else:
+    trainloader, testloader = get_loader()
 set_seed(args)
-criterion = nn.BCEWithLogitsLoss()
+if args.nn == 'fnn':
+    criterion = nn.BCEWithLogitsLoss()
+elif args.nn == 'cnn':
+    criterion = nn.CrossEntropyLoss()
+else:
+    exit(1)
 optimizer = torch.optim.Adam(model.parameters(), lr=config.learning_rate)
 
 total_step = len(trainloader)
@@ -134,10 +191,14 @@ for epoch in range(args.epoch):
         # Move tensors to the configured device
         batch = tuple(t.to(device) for t in batch)
         x, y = batch
+        y = y.to(torch.long)
 
+        if args.nn == 'cnn':
+            y = y.squeeze()
 
         # Forward pass
         outputs = model(x)
+        # log("outputs.type: {}".format(outputs.dtype))
         # log("y (shape={}): \n{}".format(y.shape, y))
         # log("y.type: {}".format(y.dtype))
         # log("outputs (shape={}): \n{}".format(outputs.shape, outputs))
@@ -148,11 +209,17 @@ for epoch in range(args.epoch):
         loss.backward()
         optimizer.step()
 
-        wandb.log({'train loss': loss.item()})
+        wandb.log({'train_loss': loss.item()})
         epoch_iterator.set_description("Training (%d / %d Steps)(loss=%2.5f)" % (i + 1, total_step, loss.item()))
 
         if (i + 1) % args.eval_every == 0:
-            accuracy = valid(args, model, testloader, i + 1)
+            if args.nn == 'ffn':
+                accuracy = valid(args, model, testloader, i + 1)
+            elif args.nn == 'cnn':
+                accuracy = valid_1d(args, model, testloader, i + 1)
+            else:
+                log("Error nn")
+                exit(1)
             if best_acc < accuracy:
                 best_acc = accuracy
                 wandb.log({'Best Accuracy until Now': best_acc})
@@ -169,3 +236,9 @@ log("Training... Done!")
 
 # nohup python3 train.py --c_type torc --d 5 --k 2 --p 0.040 --epoch 20 --trnsz 5000000 > logs/ffn_d5_k2_p0.040_e20_0.log &
 # nohup python3 train.py --c_type torc --zip 1 --limit 3000 --d 5 --k 2 --p 0.040 --epoch 20 --trnsz 5000000 --gpu 1 --sym tl > logs/ffn_d5_k2_p0.0sf40_e20sf_0.log &
+
+
+# nohup python3 train.py --nn cnn --c_type sur --d 7 --k 1 --p 0.010 --epoch 20 --trnsz 10000000 > logs/cnn_d7_k1_p0.010_e20_0.log &
+# python3 train.py --nn cnn --c_type sur --d 3 --k 1 --p 0.010 --epoch 20 --trnsz 10000000
+# python3 train.py --nn cnn --c_type sur --d 5 --k 1 --p 0.010 --epoch 20 --trnsz 10000000
+# nohup python3 train.py --nn cnn --c_type sur --d 5 --k 1 --p 0.010 --epoch 20 --trnsz 10000000 > logs/cnn_d5_k1_p0.010_e20_0.log &

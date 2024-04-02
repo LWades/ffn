@@ -26,14 +26,22 @@ def get_cnn_sur_3():
     config = ml_collections.ConfigDict()
     config.DL = 1
     config.CL = 3
+    config.N = 512
 
 
 def get_cnn_sur_5():
-    pass
+    config = ml_collections.ConfigDict()
+    config.DL = 1
+    config.CL = 3
+    config.N = 512
 
 
 def get_cnn_sur_7():
-    pass
+    config = ml_collections.ConfigDict()
+    config.DL = 1
+    config.CL = 3
+    config.N = 512
+    return config
 
 
 def get_cnn_sur_9():
