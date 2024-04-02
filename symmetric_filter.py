@@ -30,6 +30,9 @@ class SymmetricFilter:
                     self.symmetric_dicts[symmetric_syndrome] = 1
                 elif self.symmetric_dicts[symmetric_syndrome] < self.rep_limit:
                     self.symmetric_dicts[symmetric_syndrome] += 1
+                for s_type02 in self.s_types:
+                    if s_type02 == 'tl':
+                        continue
             elif s_type == 'rf:0':
                 bs = copy.deepcopy(symmetric_syndrome)
                 bs.syndrome = symmetric_syndrome.reflection_syndrome(0)
@@ -197,7 +200,7 @@ if __name__ == '__main__':
 # nohup python3 symmetric_filter.py --zip 0 --c_type torc --d 3 --p 0.050 --trnsz 10000000 --sym 'rf:0' > logs/symmetric_filter_13.log &
 # nohup python3 symmetric_filter.py --zip 0 --c_type torc --d 3 --p 0.100 --trnsz 10000000 --sym 'rf:0' > logs/symmetric_filter_14.log &
 # nohup python3 symmetric_filter.py --zip 0 --c_type torc --d 3 --p 0.150 --trnsz 10000000 --sym 'rf:0' > logs/symmetric_filter_16.log &
-# nohup python3 symmetric_filter.py --zip 0 --c_type torc --d 5 --p 0.010 --trnsz 10000000 --sym 'rf:0' > logs/symmetric_filter_15.log &
+# nohup python3 symmetric_filter.py --zip 0 --c_type torc --d 5 --p 0.010 --trnsz 10000000 --sym 'rf:0' > logs/symmetric_filter_17.log &
 
 # symmetric_filter = SymmetricFilter(d, s_types, rep_limit)
 #
@@ -227,12 +230,12 @@ if __name__ == '__main__':
 # #                        0, 0, 1,
 # #                        1, 0, 0,
 # #                        0, 0, 0])
-# syndrome02 = np.array([0, 1, 1,
-#                        0, 0, 0,
+# syndrome02 = np.array([0, 0, 0,
+#                        1, 0, 0,
+#                        0, 1, 0,
 #                        0, 0, 0,
 #                        0, 1, 0,
-#                        0, 0, 1,
-#                        0, 0, 0])
+#                        0, 1, 0])
 # syndrome02 = syndrome02[1:-1]
 # log(syndrome02)
 # f1 = symmetric_filter.filter(syndrome01)

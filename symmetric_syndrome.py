@@ -120,6 +120,9 @@ class SymmetricSyndrome:
             log("Illigal axis")
         return r_s
 
+    def rotation_syndrome(self, theta):
+        r_s = np.zeros(self.syndrome.shape)
+
     def __eq__(self, other):
         if isinstance(other, SymmetricSyndrome):
             # log("here")
@@ -152,12 +155,12 @@ if __name__ == '__main__':
                          0, 0, 1,
                          0, 0, 1,
                          0, 0, 0])
-    syndrome02 = np.array([0, 1, 0,
-                           0, 0, 1,
+    syndrome02 = np.array([0, 0, 0,
+                           1, 0, 0,
+                           1, 0, 0,
+                           0, 1, 0,
                            0, 0, 0,
-                           0, 0, 0,
-                           0, 1, 1,
-                           0, 0, 0])
+                           1, 0, 0])
     syndrome02 = syndrome02[1:-1]
     syndrome = syndrome[1:-1]
     # syndrome = np.array([1, 0, 0, 0, 0,

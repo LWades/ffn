@@ -10,12 +10,16 @@ from utils import log
 CONFIGS = {
     'ffn': configs.get_ffn_torc(),
     'cnn_sur_7': configs.get_cnn_sur_7(),
+    'cnn_sur_11': configs.get_cnn_sur_11()
 }
 
 if args.nn == 'fnn':
     config = CONFIGS['ffn']
 elif args.nn == 'cnn':
-    config = CONFIGS['cnn_sur_7']
+    if args.d == 11:
+        config = CONFIGS['cnn_sur_11']
+    else:    
+        config = CONFIGS['cnn_sur_7']
 
 input_size = CONFIGS['ffn'].input_size
 hidden_size = CONFIGS['ffn'].hidden_size
