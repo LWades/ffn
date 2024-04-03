@@ -122,6 +122,19 @@ class SymmetricSyndrome:
 
     def rotation_syndrome(self, theta):
         r_s = np.zeros(self.syndrome.shape)
+        if theta == 0:
+            for i in range(self.xs.shape[0]):
+                x, y = self.xs[i], self.ys[i]
+                r_s[(2 * self.d + y + self.center[0] - self.center[1]) % (2 * self.d), (2 * self.d - x + self.center[0] + self.center[1]) % (2 * self.d)] = 1
+        elif theta == 1:
+            for i in range(self.xs.shape[0]):
+                x, y = self.xs[i], self.ys[i]
+                r_s[(2 * self.center[0] - x) % (2 * self.d), (2 * self.center[1] - y) % (2 * self.d)] = 1
+        elif theta == 2:
+            for i in range(self.xs.shape[0]):
+                x, y = self.xs[i], self.ys[i]
+                r_s[(2 * self.d + self.center[0] + self.center[1] - y) % (2 * self.d), (2 * self.d + self.center[1] - self.center[0] + x) % (2 * self.d)] = 1
+        return r_s
 
     def __eq__(self, other):
         if isinstance(other, SymmetricSyndrome):
