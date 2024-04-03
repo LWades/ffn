@@ -195,6 +195,14 @@ if __name__ == '__main__':
 # nohup python3 symmetric_filter.py --zip 0 --c_type torc --d 5 --p 0.150 --trnsz 10000000 --sym 'tl' > logs/symmetric_filter_26.log &
 # nohup python3 symmetric_filter.py --zip 0 --c_type torc --d 5 --p 0.100 --trnsz 10000000 --sym 'tl' > logs/symmetric_filter_22.log &
 # nohup python3 symmetric_filter.py --zip 0 --c_type torc --d 5 --p 0.100 --trnsz 10000000 --sym 'rf:0' > logs/symmetric_filter_23.log &
+# nohup python3 symmetric_filter.py --zip 0 --c_type torc --d 7 --p 0.010 --trnsz 10000000 --sym 'tl' > logs/symmetric_filter_27.log &
+# nohup python3 symmetric_filter.py --zip 0 --c_type torc --d 7 --p 0.010 --trnsz 10000000 --sym 'rf:0' > logs/symmetric_filter_28.log &
+# nohup python3 symmetric_filter.py --zip 0 --c_type torc --d 7 --p 0.050 --trnsz 10000000 --sym 'tl' > logs/symmetric_filter_29.log &
+# nohup python3 symmetric_filter.py --zip 0 --c_type torc --d 7 --p 0.050 --trnsz 10000000 --sym 'rf:0' > logs/symmetric_filter_30.log &
+# nohup python3 symmetric_filter.py --zip 0 --c_type torc --d 7 --p 0.100 --trnsz 10000000 --sym 'tl' > logs/symmetric_filter_31.log &
+# nohup python3 symmetric_filter.py --zip 0 --c_type torc --d 7 --p 0.100 --trnsz 10000000 --sym 'rf:0' > logs/symmetric_filter_32.log &
+# nohup python3 symmetric_filter.py --zip 0 --c_type torc --d 7 --p 0.150 --trnsz 10000000 --sym 'tl' > logs/symmetric_filter_33.log &
+# nohup python3 symmetric_filter.py --zip 0 --c_type torc --d 7 --p 0.150 --trnsz 10000000 --sym 'rf:0' > logs/symmetric_filter_34.log &
 
 # symmetric_filter = SymmetricFilter(d, s_types, rep_limit)
 #
