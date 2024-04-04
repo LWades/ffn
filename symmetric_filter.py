@@ -30,37 +30,30 @@ class SymmetricFilter:
                     self.symmetric_dicts[symmetric_syndrome] = 1
                 elif self.symmetric_dicts[symmetric_syndrome] < self.rep_limit:
                     self.symmetric_dicts[symmetric_syndrome] += 1
-                for s_type02 in self.s_types:
-                    if s_type02 == 'tl':
-                        continue
-            elif s_type == 'rf:0':
+                # for s_type02 in self.s_types:
+                #     if s_type02 == 'tl':
+                #         continue
+            else:
                 bs = copy.deepcopy(symmetric_syndrome)
-                bs.syndrome = symmetric_syndrome.reflection_syndrome(0)
+                if s_type == 'rf:0':
+                    bs.syndrome = symmetric_syndrome.reflection_syndrome(0)
+                elif s_type == 'rf:1':
+                    bs.syndrome = symmetric_syndrome.reflection_syndrome(1)
+                elif s_type == 'rf:2':
+                    bs.syndrome = symmetric_syndrome.reflection_syndrome(2)
+                elif s_type == 'rf:3':
+                    bs.syndrome = symmetric_syndrome.reflection_syndrome(3)
+                elif s_type == 'rt:0':
+                    bs.syndrome = symmetric_syndrome.rotation_syndrome(0)
+                elif s_type == 'rt:1':
+                    bs.syndrome = symmetric_syndrome.rotation_syndrome(1)
+                elif s_type == 'rt:2':
+                    bs.syndrome = symmetric_syndrome.rotation_syndrome(2)
                 if bs not in self.symmetric_dicts:
                     self.symmetric_dicts[bs] = 1
                 elif self.symmetric_dicts[bs] < self.rep_limit:
                     self.symmetric_dicts[bs] += 1
-            elif s_type == 'rf:1':
-                bs = copy.deepcopy(symmetric_syndrome)
-                bs.syndrome = symmetric_syndrome.reflection_syndrome(1)
-                if bs not in self.symmetric_dicts:
-                    self.symmetric_dicts[bs] = 1
-                elif self.symmetric_dicts[bs] < self.rep_limit:
-                    self.symmetric_dicts[bs] += 1
-            elif s_type == 'rf:2':
-                bs = copy.deepcopy(symmetric_syndrome)
-                bs.syndrome = symmetric_syndrome.reflection_syndrome(2)
-                if bs not in self.symmetric_dicts:
-                    self.symmetric_dicts[bs] = 1
-                elif self.symmetric_dicts[bs] < self.rep_limit:
-                    self.symmetric_dicts[bs] += 1
-            elif s_type == 'rf:3':
-                bs = copy.deepcopy(symmetric_syndrome)
-                bs.syndrome = symmetric_syndrome.reflection_syndrome(3)
-                if bs not in self.symmetric_dicts:
-                    self.symmetric_dicts[bs] = 1
-                elif self.symmetric_dicts[bs] < self.rep_limit:
-                    self.symmetric_dicts[bs] += 1
+
 
     """
     如果存在重复并次数超过了rep_limit，就返回 False，表示抛弃这个错误症状，否则为 True，加入训练集
@@ -198,7 +191,7 @@ if __name__ == '__main__':
 # nohup python3 symmetric_filter.py --zip 0 --c_type torc --d 7 --p 0.010 --trnsz 10000000 --sym 'tl' > logs/symmetric_filter_27.log &
 # nohup python3 symmetric_filter.py --zip 0 --c_type torc --d 7 --p 0.010 --trnsz 10000000 --sym 'rf:0' > logs/symmetric_filter_28.log &
 # nohup python3 symmetric_filter.py --zip 0 --c_type torc --d 7 --p 0.050 --trnsz 10000000 --sym 'tl' > logs/symmetric_filter_29.log &
-# nohup python3 symmetric_filter.py --zip 0 --c_type torc --d 7 --p 0.050 --trnsz 10000000 --sym 'rf:0' > logs/symmetric_filter_30.log &
+# nohup python3 symmetric_filter.py --zip 0 --c_type torc --d 7 --p 0.050 --trnsz 10000000 --sym 'rf:0' > logs/symmetric_filter_44.log &
 # nohup python3 symmetric_filter.py --zip 0 --c_type torc --d 7 --p 0.100 --trnsz 10000000 --sym 'tl' > logs/symmetric_filter_31.log &
 # nohup python3 symmetric_filter.py --zip 0 --c_type torc --d 7 --p 0.100 --trnsz 10000000 --sym 'rf:0' > logs/symmetric_filter_32.log &
 # nohup python3 symmetric_filter.py --zip 0 --c_type torc --d 7 --p 0.150 --trnsz 10000000 --sym 'tl' > logs/symmetric_filter_33.log &
@@ -223,30 +216,12 @@ if __name__ == '__main__':
 #                        0, 0, 0])
 # syndrome01 = syndrome01[1:-1]
 # log(syndrome01)
-# # syndrome02 = np.array([0, 0, 1,
-# #                        0, 1, 0,
-# #                        0, 0, 0,
-# #                        0, 0, 1,
-# #                        0, 0, 1,
-# #                        0, 0, 0])
-# # syndrome02 = np.array([0, 1, 0,
-# #                        0, 0, 0,
-# #                        0, 0, 1,
-# #                        0, 0, 1,
-# #                        0, 0, 1,
-# #                        0, 0, 0])
-# # syndrome02 = np.array([0, 1, 1,
-# #                        0, 0, 0,
-# #                        0, 0, 0,
-# #                        0, 0, 1,
-# #                        1, 0, 0,
-# #                        0, 0, 0])
-# syndrome02 = np.array([0, 0, 0,
-#                        1, 0, 0,
-#                        0, 1, 0,
+# syndrome02 = np.array([0, 1, 1,
+#                        0, 0, 0,
 #                        0, 0, 0,
 #                        0, 1, 0,
-#                        0, 1, 0])
+#                        0, 0, 1,
+#                        0, 0, 0])
 # syndrome02 = syndrome02[1:-1]
 # log(syndrome02)
 # f1 = symmetric_filter.filter(syndrome01)
