@@ -42,6 +42,9 @@ parser.add_argument('--sym', type=str, nargs='+',
 parser.add_argument('--nn', type=str, default='fnn', choices=['fnn', 'cnn', 'rnn'],
                     help='type of network')
 
+parser.add_argument('--work', type=int, default=1,
+                    help='num of work')
+
 args = parser.parse_args()
 
 log(f"args:\n{args}")

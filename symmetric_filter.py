@@ -30,6 +30,32 @@ class SymmetricFilter:
                     self.symmetric_dicts[symmetric_syndrome] = 1
                 elif self.symmetric_dicts[symmetric_syndrome] < self.rep_limit:
                     self.symmetric_dicts[symmetric_syndrome] += 1
+                if len(self.s_types) > 0:
+                    for s_type_other in self.s_types:
+                        if s_type_other == 'tl':
+                            continue
+                        bs = copy.deepcopy(symmetric_syndrome)
+                        bs.syndrome, bs_xs, bs_ys = bs.base_syndrome_xs_ys()
+                        bs.xs, bs.ys = bs_xs, bs_ys
+                        if s_type == 'rf:0':
+                            bs.syndrome = bs.reflection_syndrome(0)
+                        if s_type == 'rf:1':
+                            bs.syndrome = bs.reflection_syndrome(1)
+                        if s_type == 'rf:2':
+                            bs.syndrome = bs.reflection_syndrome(2)
+                        if s_type == 'rf:3':
+                            bs.syndrome = bs.reflection_syndrome(3)
+                        if s_type == 'rt:0':
+                            bs.syndrome = bs.rotation_syndrome(0)
+                        if s_type == 'rt:1':
+                            bs.syndrome = bs.rotation_syndrome(1)
+                        if s_type == 'rt:2':
+                            bs.syndrome = bs.rotation_syndrome(2)
+                        if bs not in self.symmetric_dicts:
+                            self.symmetric_dicts[bs] = 1
+                        elif self.symmetric_dicts[bs] < self.rep_limit:
+                            self.symmetric_dicts[bs] += 1
+                    break
                 # for s_type02 in self.s_types:
                 #     if s_type02 == 'tl':
                 #         continue
@@ -219,7 +245,7 @@ if __name__ == '__main__':
 # syndrome02 = np.array([0, 1, 1,
 #                        0, 0, 0,
 #                        0, 0, 0,
-#                        0, 1, 0,
+#                        1, 0, 0,
 #                        0, 0, 1,
 #                        0, 0, 0])
 # syndrome02 = syndrome02[1:-1]

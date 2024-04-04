@@ -12,6 +12,7 @@ CONFIGS = {
     'cnn_sur_3': configs.get_cnn_sur_3(),
     'cnn_sur_5': configs.get_cnn_sur_5(),
     'cnn_sur_7': configs.get_cnn_sur_7(),
+    'cnn_sur_9': configs.get_cnn_sur_9(),
     'cnn_sur_11': configs.get_cnn_sur_11()
 }
 
@@ -26,6 +27,8 @@ elif args.nn == 'cnn':
         config = CONFIGS['cnn_sur_5']
     elif args.d == 3:
         config = CONFIGS['cnn_sur_3']
+    elif args.d == 9:
+        config = CONFIGS['cnn_sur_9']
 
 input_size = CONFIGS['ffn'].input_size
 hidden_size = CONFIGS['ffn'].hidden_size

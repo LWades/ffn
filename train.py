@@ -146,8 +146,12 @@ def valid(args, model, test_loader, global_step):
 wandb_name = f"{args.nn}_d{args.d}_p{args.p}_trnsz{args.trnsz}_ep{args.epoch}"
 if args.zip == 1:
     wandb_name += f"_zip_limit{args.limit}"
+if args.work == 1:
+    wandb_project = "work01"
+else:
+    wandb_project = "work02"
 wandb.init(
-    project="work02",
+    project=wandb_project,
     name=wandb_name,
     config={
         'd': args.d,
@@ -249,6 +253,7 @@ log("Training... Done!")
 # nohup python3 train.py --nn cnn --c_type sur --d 11 --k 1 --p 0.150 --epoch 20 --trnsz 10000000 --gpu 2 > logs/cnn_d11_k1_p0.150_e20_0.log &
 # nohup python3 train.py --nn cnn --c_type sur --d 7 --k 1 --p 0.010 --epoch 20 --trnsz 10000000 --gpu 2 > logs/cnn_d7_k1_p0.010_e20_0.log &
 # nohup python3 train.py --nn cnn --c_type sur --d 7 --k 1 --p 0.050 --epoch 20 --trnsz 10000000 --gpu 3 > logs/cnn_d7_k1_p0.050_e20_0.log &
+# nohup python3 train.py --nn cnn --c_type sur --d 7 --k 1 --p 0.100 --epoch 20 --trnsz 10000000 --gpu 2 > logs/cnn_d7_k1_p0.100_e20_0.log &
 # nohup python3 train.py --nn cnn --c_type sur --d 7 --k 1 --p 0.150 --epoch 20 --trnsz 10000000 --gpu 0 > logs/cnn_d7_k1_p0.150_e20_0.log &
 # nohup python3 train.py --nn cnn --c_type sur --d 7 --k 1 --p 0.200 --epoch 20 --trnsz 10000000 --gpu 3 > logs/cnn_d7_k1_p0.200_e20_0.log &
 # nohup python3 train.py --nn cnn --c_type sur --d 3 --k 1 --p 0.010 --epoch 20 --trnsz 10000000 --gpu 2 > logs/cnn_d3_k1_p0.010_e20_0.log &
@@ -256,3 +261,4 @@ log("Training... Done!")
 # nohup python3 train.py --nn cnn --c_type sur --d 3 --k 1 --p 0.100 --epoch 20 --trnsz 10000000 --gpu 2 > logs/cnn_d3_k1_p0.100_e20_0.log &
 # nohup python3 train.py --nn cnn --c_type sur --d 3 --k 1 --p 0.150 --epoch 20 --trnsz 10000000 --gpu 0 > logs/cnn_d3_k1_p0.150_e20_0.log &
 # nohup python3 train.py --nn cnn --c_type sur --d 3 --k 1 --p 0.200 --epoch 20 --trnsz 10000000 --gpu 3 > logs/cnn_d3_k1_p0.200_e20_0.log &
+# nohup python3 train.py --nn cnn --c_type sur --d 9 --k 1 --p 0.010 --epoch 20 --trnsz 10000000 --gpu 0 > logs/cnn_d9_k1_p0.200_e20_0.log &

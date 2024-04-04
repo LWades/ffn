@@ -67,6 +67,14 @@ class SymmetricSyndrome:
         b_s[new_xs, new_ys] = 1
         return b_s
 
+    def base_syndrome_xs_ys(self):
+        offset = self.center_img - self.center
+        b_s = np.zeros(self.syndrome.shape)
+        new_xs = (self.xs + offset[0]) % (2 * self.d)
+        new_ys = (self.ys + offset[1]) % (2 * self.d)
+        b_s[new_xs, new_ys] = 1
+        return b_s, new_xs, new_ys
+
     """
     axis ->
         0: 垂直轴

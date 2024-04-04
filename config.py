@@ -47,7 +47,11 @@ def get_cnn_sur_7():
 
 
 def get_cnn_sur_9():
-    pass
+    config = ml_collections.ConfigDict()
+    config.DL = 1
+    config.CL = 4
+    config.N = 1024
+    return config
 
 
 def get_cnn_sur_11():
