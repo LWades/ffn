@@ -27,6 +27,7 @@ def get_cnn_sur_3():
     config.DL = 1
     config.CL = 3
     config.N = 512
+    return config
 
 
 def get_cnn_sur_5():
@@ -34,6 +35,7 @@ def get_cnn_sur_5():
     config.DL = 1
     config.CL = 3
     config.N = 512
+    return config
 
 
 def get_cnn_sur_7():
