@@ -250,3 +250,4 @@ log("Training... Done!")
 # nohup python3 train.py --nn cnn --c_type sur --d 7 --k 1 --p 0.010 --epoch 20 --trnsz 10000000 --gpu 2 > logs/cnn_d7_k1_p0.010_e20_0.log &
 # nohup python3 train.py --nn cnn --c_type sur --d 7 --k 1 --p 0.050 --epoch 20 --trnsz 10000000 --gpu 3 > logs/cnn_d7_k1_p0.050_e20_0.log &
 # nohup python3 train.py --nn cnn --c_type sur --d 7 --k 1 --p 0.150 --epoch 20 --trnsz 10000000 --gpu 0 > logs/cnn_d7_k1_p0.150_e20_0.log &
+# nohup python3 train.py --nn cnn --c_type sur --d 7 --k 1 --p 0.200 --epoch 20 --trnsz 10000000 --gpu 3 > logs/cnn_d7_k1_p0.200_e20_0.log &
