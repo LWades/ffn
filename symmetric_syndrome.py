@@ -75,6 +75,8 @@ class SymmetricSyndrome:
         b_s[new_xs, new_ys] = 1
         return b_s, new_xs, new_ys
 
+
+
     """
     axis ->
         0: 垂直轴
@@ -105,11 +107,11 @@ class SymmetricSyndrome:
             核心思量：沿着中心对称轴距离主对角线的距离先移动一段距离 |k|，坐标交换后返回
             """
             offset_center2xey_sub_times2 = self.center[0] - self.center[1]
-            log(f"offset_center2xey_sub_times2 = {offset_center2xey_sub_times2}")
+            # log(f"offset_center2xey_sub_times2 = {offset_center2xey_sub_times2}")
             for i in range(self.xs.shape[0]):
                 x, y = self.xs[i], self.ys[i]
                 r_s[(y + offset_center2xey_sub_times2) % (2 * self.d), (2 * self.d + x - offset_center2xey_sub_times2) % (2 * self.d)] = 1
-                log(f"({x}, {y})->({y + offset_center2xey_sub_times2}, {x - offset_center2xey_sub_times2})")
+                # log(f"({x}, {y})->({y + offset_center2xey_sub_times2}, {x - offset_center2xey_sub_times2})")
         elif axis == 3:
             """
             set: center = (cx, cy)
@@ -117,13 +119,13 @@ class SymmetricSyndrome:
             give (a, b) -> ((2d-1) - b + 2k), (2d-1) - a + 2k)
             核心思想：沿着中心对称轴距离副对角线的距离先移动一段距离 |k|，坐标交换后用 2d-1 减，之后返回去
             """
-            log(f"self.center = {self.center}")
+            # log(f"self.center = {self.center}")
             offset_center2xpyed_sub_times2 = self.center[0] + self.center[1] - (2 * self.d - 1)
-            log(f"offset_center2xey_sub_times2 = {offset_center2xpyed_sub_times2}")
+            # log(f"offset_center2xey_sub_times2 = {offset_center2xpyed_sub_times2}")
             for i in range(self.xs.shape[0]):
                 x, y = self.xs[i], self.ys[i]
                 r_s[(2 * self.d - 1 - y + offset_center2xpyed_sub_times2) % (2 * self.d), (2 * self.d - 1 - x + offset_center2xpyed_sub_times2) % (2 * self.d)] = 1
-                log(f"({x}, {y})->({(2 * self.d - 1 - y + offset_center2xpyed_sub_times2) % (2 * self.d)}, {(2 * self.d - 1 - x + offset_center2xpyed_sub_times2) % (2 * self.d)})")
+                # log(f"({x}, {y})->({(2 * self.d - 1 - y + offset_center2xpyed_sub_times2) % (2 * self.d)}, {(2 * self.d - 1 - x + offset_center2xpyed_sub_times2) % (2 * self.d)})")
         else:
             log("Illigal axis")
         return r_s
@@ -159,6 +161,8 @@ class SymmetricSyndrome:
         # log("there")
         if 'tl' in self.s_types:
             # log("there: tl")
+            bs = self.base_syndrome()
+            # log("bs: {}".format(bs))
             numpy_bytes = self.base_syndrome().tobytes()
         else:
             # log("there: not tl")
