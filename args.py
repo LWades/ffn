@@ -47,4 +47,9 @@ parser.add_argument('--work', type=int, default=1,
 
 args = parser.parse_args()
 
+if args.sym == ['rf']:
+    args.sym = ['rf:0', 'rf:1', 'rf:2', 'rf:3']
+elif args.synm == ['rt']:
+    args.sym = ['rt:0', 'rt:1', 'rt:2']
+
 log(f"args:\n{args}")
