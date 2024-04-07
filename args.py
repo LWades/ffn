@@ -5,6 +5,8 @@ from utils import log
 
 parser = argparse.ArgumentParser()
 
+parser.add_argument("--name", required=True,
+                    help="Name of this run. Used for monitoring.")
 parser.add_argument('--d', type=int, default=3,
                     help='the distance of the original code, one of the labels of code')
 parser.add_argument('--k', type=int, default=1,
