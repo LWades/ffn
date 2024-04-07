@@ -47,7 +47,9 @@ parser.add_argument('--work', type=int, default=1,
 
 args = parser.parse_args()
 
-if args.sym == ['rf']:
+if args.sym == ['all']:
+    args.sym = ['tl', 'rf:0', 'rf:1', 'rf:2', 'rf:3', 'rt:0', 'rt:1', 'rt:2']
+elif args.sym == ['rf']:
     args.sym = ['rf:0', 'rf:1', 'rf:2', 'rf:3']
 elif args.sym == ['rt']:
     args.sym = ['rt:0', 'rt:1', 'rt:2']

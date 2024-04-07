@@ -36,6 +36,13 @@ class AverageMeter(object):
         self.avg = self.sum / self.count
 
 
+def save_model(args, model):
+    model_to_save = model.module if hasattr(model, 'module') else model
+    model_checkpoint = os.path.join(args.output_dir, "%s_checkpoint.bin" % args.name)
+    torch.save(model_to_save.state_dict(), model_checkpoint)
+    log("Saved model checkpoint to [DIR: {}]".format(args.output_dir))
+
+
 def set_seed(args):
     random.seed(args.seed)
     np.random.seed(args.seed)
