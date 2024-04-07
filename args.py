@@ -5,8 +5,10 @@ from utils import log
 
 parser = argparse.ArgumentParser()
 
-parser.add_argument("--name", required=True,
+parser.add_argument("--name", type=str, default="",
                     help="Name of this run. Used for monitoring.")
+parser.add_argument("--output_dir", default="output", type=str,
+                    help="The output directory where checkpoints will be written.")
 parser.add_argument('--d', type=int, default=3,
                     help='the distance of the original code, one of the labels of code')
 parser.add_argument('--k', type=int, default=1,

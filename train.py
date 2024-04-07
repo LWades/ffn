@@ -233,6 +233,7 @@ for epoch in range(args.epoch):
                 exit(1)
             if best_acc < accuracy:
                 best_acc = accuracy
+                save_model(model)
                 wandb.log({'Best Accuracy until Now': best_acc})
             model.train()
 log("Best Accuracy: {}".format(best_acc))
@@ -275,4 +276,4 @@ log("Training... Done!")
 # nohup python3 train.py --nn cnn --c_type sur --d 5 --k 1 --p 0.050 --epoch 20 --trnsz 10000000 --gpu 0 --work 2 > logs/cnn_d5_k1_p0.050_e20_0.log &
 # nohup python3 train.py --nn cnn --c_type sur --d 5 --k 1 --p 0.100 --epoch 20 --trnsz 10000000 --gpu 0 --work 2 > logs/cnn_d5_k1_p0.100_e20_0.log &
 # nohup python3 train.py --nn cnn --c_type sur --d 5 --k 1 --p 0.150 --epoch 20 --trnsz 10000000 --gpu 0 --work 2 > logs/cnn_d5_k1_p0.150_e20_0.log &
-# nohup python3 train.py --name cnn_11_0.10 --nn cnn --c_type sur --d 11 --k 1 --p 0.100 --epoch 17 --trnsz 10000000 --gpu 0 --work 2 > logs/cnn_d11_k1_p0.100_e20_0.log &
+# nohup python3 train.py --name cnn_11_0.10 --nn cnn --c_type sur --d 11 --k 1 --p 0.100 --epoch 17 --trnsz 10000000 --gpu 1 --work 2 > logs/cnn_d11_k1_p0.100_e20_1.log &

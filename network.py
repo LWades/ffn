@@ -76,8 +76,10 @@ class CNN(nn.Module):
 
         self.conv_layers = nn.ModuleList()
         for i in range(CL):
-            in_channels = 1 if i == 0 else 32 * (2 ** (i - 1))
-            out_channels = 32 * (2 ** i)
+            in_channels = 1 if i == 0 else 64
+            # in_channels = 1 if i == 0 else 32 * (2 ** (i - 1))
+            out_channels = 64
+            # out_channels = 32 * (2 ** i)
             self.conv_layers.append(nn.Conv2d(in_channels, out_channels, kernel_size=3, padding=1))
             self.conv_layers.append(nn.ReLU())
             self.conv_layers.append(nn.BatchNorm2d(out_channels))
