@@ -36,7 +36,7 @@ class AverageMeter(object):
         self.avg = self.sum / self.count
 
 
-def save_model(args, model):
+def save_model(model):
     model_to_save = model.module if hasattr(model, 'module') else model
     model_checkpoint = os.path.join(args.output_dir, "%s_checkpoint.bin" % args.name)
     torch.save(model_to_save.state_dict(), model_checkpoint)
@@ -277,3 +277,5 @@ log("Training... Done!")
 # nohup python3 train.py --nn cnn --c_type sur --d 5 --k 1 --p 0.100 --epoch 20 --trnsz 10000000 --gpu 0 --work 2 > logs/cnn_d5_k1_p0.100_e20_0.log &
 # nohup python3 train.py --nn cnn --c_type sur --d 5 --k 1 --p 0.150 --epoch 20 --trnsz 10000000 --gpu 0 --work 2 > logs/cnn_d5_k1_p0.150_e20_0.log &
 # nohup python3 train.py --name cnn_11_0.10 --nn cnn --c_type sur --d 11 --k 1 --p 0.100 --epoch 17 --trnsz 10000000 --gpu 1 --work 2 > logs/cnn_d11_k1_p0.100_e20_1.log &
+# nohup python3 train.py --name cnn_11_0.10-5e6 --nn cnn --c_type sur --d 11 --k 1 --p 0.100 --epoch 20 --trnsz 10000000 --gpu 0 --work 2 > logs/cnn_d11_k1_p0.100_e20_2.log &
+# nohup python3 train.py --name cnn_11_0.10-5e6 --nn cnn --c_type sur --d 11 --k 1 --p 0.100 --epoch 20 --trnsz 5000000 --gpu 0 --work 2 > logs/cnn_d11_k1_p0.100_e20_3.log &
