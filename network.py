@@ -98,7 +98,8 @@ class CNN(nn.Module):
             self.conv_output_size = out_channels * feature_map_size * feature_map_size
         else:
             feature_map_size = 2 * args.d - 1
-            self.conv_output_size = out_channels * (feature_map_size // 2 ** CL) * (feature_map_size // 2 ** CL)
+            self.conv_output_size = out_channels * feature_map_size * feature_map_size
+            # self.conv_output_size = out_channels * (feature_map_size // 2 ** CL) * (feature_map_size // 2 ** CL)
 
         for i in range(DL):
             in_features = self.conv_output_size if i == 0 else N
