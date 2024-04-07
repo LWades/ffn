@@ -82,8 +82,8 @@ class CNN(nn.Module):
             self.conv_layers.append(nn.ReLU())
             self.conv_layers.append(nn.BatchNorm2d(out_channels))
 
-            if args.d > 3:
-                self.conv_layers.append(nn.MaxPool2d(kernel_size=2, stride=2))
+            # if args.d > 3:
+            #     self.conv_layers.append(nn.MaxPool2d(kernel_size=2, stride=2))
 
         self.flatten = nn.Flatten()
         self.dense_layers = nn.ModuleList()
