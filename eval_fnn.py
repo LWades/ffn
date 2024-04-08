@@ -31,9 +31,8 @@ for p in ps:
     log("test_data: {}".format(filename_test_data))
     with h5py.File(filename_test_data, 'r') as f:
         test_syndrome = f[key_syndrome][()]
-        test_syndrome_post = np.expand_dims(test_syndrome, axis=1)
         test_logical_error = f[key_logical_error][()]
-        testset = ToricDataset({key_syndrome: test_syndrome_post, key_logical_error: test_logical_error})
+        testset = ToricDataset({key_syndrome: test_syndrome, key_logical_error: test_logical_error})
 
     test_sampler = SequentialSampler(testset)
     test_loader = DataLoader(testset,
