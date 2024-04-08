@@ -149,6 +149,52 @@ def valid(model, test_loader):
     return accuracy
 
 
+def valid_eval(model, test_loader):
+    eval_losses = AverageMeter()
+    model.eval()
+    all_preds, all_label = [], []
+    epoch_iterator = tqdm(test_loader,
+                          desc="Validating... (loss=X.X)",
+                          bar_format="{l_bar}{r_bar}",
+                          dynamic_ncols=True,
+                          )
+    loss_fct = nn.BCEWithLogitsLoss()
+    for step, batch in enumerate(epoch_iterator):
+        batch = tuple(t.to(device) for t in batch)
+        x, y = batch
+        with torch.no_grad():
+            logits = model(x)
+            # log("logits (shape={}): {}".format(logits.shape, logits))
+            probs = torch.sigmoid(logits)
+
+            eval_loss = loss_fct(logits, y)
+            eval_losses.update(eval_loss.item())
+
+            preds = (probs > 0.5).long()
+            # preds = torch.argmax(logits, dim=-1)
+
+        if len(all_preds) == 0:
+            all_preds.append(preds.detach().cpu().numpy())
+            all_label.append(y.detach().cpu().numpy())
+        else:
+            all_preds[0] = np.append(
+                all_preds[0], preds.detach().cpu().numpy(), axis=0
+            )
+            all_label[0] = np.append(
+                all_label[0], y.detach().cpu().numpy(), axis=0
+            )
+        epoch_iterator.set_description("Validating... (loss=%2.5f)" % eval_losses.val)
+
+    all_preds, all_label = all_preds[0], all_label[0]
+    accuracy = (all_preds == all_label).mean()
+
+    # log("Validation Results")
+    log("Valid Loss: %2.5f" % eval_losses.avg)
+    log("Valid Accuracy: %2.5f" % accuracy)
+
+    return accuracy
+
+
 device = torch.device('cuda:{}'.format(args.gpu) if torch.cuda.is_available() else 'cpu')
 
 if __name__ == "__main__":
