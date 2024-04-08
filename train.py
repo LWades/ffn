@@ -202,9 +202,9 @@ for epoch in range(args.epoch):
         # Move tensors to the configured device
         batch = tuple(t.to(device) for t in batch)
         x, y = batch
-        y = y.to(torch.long)
-
+        
         if args.nn == 'cnn':
+            y = y.to(torch.long)
             y = y.squeeze()
 
         # Forward pass
@@ -284,4 +284,4 @@ log("Training... Done!")
 # nohup python3 train.py --name cnn_5_0.10-1e7 --nn cnn --c_type sur --d 5 --k 1 --p 0.10 --epoch 20 --trnsz 10000000 --gpu 0 --work 2 > logs/cnn_5_0.10-1e7_0.log &
 
 # fnn 3
-# nohup python3 train.py --name fnn_3_0.10-5e6 --nn fnn --c_type sur --d 3 --k 1 --p 0.10 --epoch 20 --trnsz 5000000 --gpu 1 --work 1 > logs/fnn_3_0.10-5e6_0.log &
+# nohup python3 train.py --name fnn_3_0.10-5e6 --nn fnn --c_type torc --d 3 --k 2 --p 0.10 --epoch 20 --trnsz 5000000 --gpu 1 --work 1 > logs/fnn_3_0.10-5e6_0.log &
