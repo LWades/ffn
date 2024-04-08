@@ -202,7 +202,7 @@ for epoch in range(args.epoch):
         # Move tensors to the configured device
         batch = tuple(t.to(device) for t in batch)
         x, y = batch
-        
+
         if args.nn == 'cnn':
             y = y.to(torch.long)
             y = y.squeeze()
@@ -224,7 +224,7 @@ for epoch in range(args.epoch):
         epoch_iterator.set_description("Training (%d / %d Steps)(loss=%2.5f)" % (i + 1, total_step, loss.item()))
 
         if (i + 1) % args.eval_every == 0:
-            if args.nn == 'ffn':
+            if args.nn == 'fnn':
                 accuracy = valid(args, model, testloader, i + 1)
             elif args.nn == 'cnn':
                 accuracy = valid_1d(args, model, testloader, i + 1)
