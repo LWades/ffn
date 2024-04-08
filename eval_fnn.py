@@ -6,7 +6,7 @@ import torch
 from torch.utils.data import Dataset, DataLoader, RandomSampler, DistributedSampler, SequentialSampler
 import h5py
 from args import args
-from train import valid
+from train import valid_eval
 from network import get_model
 import numpy as np
 from data_process import ToricDataset
@@ -50,7 +50,7 @@ for p in ps:
     model.to(device)
     model.eval()
 
-    acc = valid(model, test_loader)
+    acc = valid_eval(model, test_loader)
     accs.append(accs)
     log("p {} acc: {}".format(format(p, '.3f'), acc))
 log("accs: \n{}".format(accs))
