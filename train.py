@@ -149,95 +149,96 @@ def valid(model, test_loader):
     return accuracy
 
 
-# device = torch.device('cpu')
-device = torch.device('cuda:{}'.format(args.gpu) if torch.cuda.is_available() else 'cpu')
+if __name__ == "__main__":
+    # device = torch.device('cpu')
+    device = torch.device('cuda:{}'.format(args.gpu) if torch.cuda.is_available() else 'cpu')
 
-model = get_model()
-model.to(device)
-if args.nn == 'cnn':
-    trainloader, testloader = get_loader_sur_img()
-elif args.nn == 'fnn':
-    trainloader, testloader = get_loader()
+    model = get_model()
+    model.to(device)
+    if args.nn == 'cnn':
+        trainloader, testloader = get_loader_sur_img()
+    elif args.nn == 'fnn':
+        trainloader, testloader = get_loader()
 
-wandb_name = f"{args.nn}_d{args.d}_p{args.p}_trnsz{args.trnsz}_ep{args.epoch}"
-if args.zip == 1:
-    wandb_name += f"_zip_limit{args.limit}"
-if args.work == 1:
-    wandb_project = "work01"
-else:
-    wandb_project = "work02"
-wandb.init(
-    project=wandb_project,
-    name=wandb_name,
-    config={
-        'd': args.d,
-        'p': args.p,
-        'train size': args.trnsz,
-        'epoch': args.epoch,
-    }
-)
+    wandb_name = f"{args.nn}_d{args.d}_p{args.p}_trnsz{args.trnsz}_ep{args.epoch}"
+    if args.zip == 1:
+        wandb_name += f"_zip_limit{args.limit}"
+    if args.work == 1:
+        wandb_project = "work01"
+    else:
+        wandb_project = "work02"
+    wandb.init(
+        project=wandb_project,
+        name=wandb_name,
+        config={
+            'd': args.d,
+            'p': args.p,
+            'train size': args.trnsz,
+            'epoch': args.epoch,
+        }
+    )
 
-set_seed(args)
-if args.nn == 'fnn':
-    criterion = nn.BCEWithLogitsLoss()
-elif args.nn == 'cnn':
-    criterion = nn.CrossEntropyLoss()
-else:
-    exit(1)
-optimizer = torch.optim.Adam(model.parameters(), lr=config.learning_rate)
+    set_seed(args)
+    if args.nn == 'fnn':
+        criterion = nn.BCEWithLogitsLoss()
+    elif args.nn == 'cnn':
+        criterion = nn.CrossEntropyLoss()
+    else:
+        exit(1)
+    optimizer = torch.optim.Adam(model.parameters(), lr=config.learning_rate)
 
-total_step = len(trainloader)
-best_acc = 0
-log("Training Start...")
-log("Epoch num: ".format(args.epoch))
-for epoch in range(args.epoch):
-    log("Epoch: {}".format(epoch + 1))
-    model.train()
-    epoch_iterator = tqdm(trainloader,
-                          desc="Training (X / X Steps) (loss=X.X)",
-                          bar_format="{l_bar}{r_bar}",
-                          dynamic_ncols=True
-                          )
-    for i, batch in enumerate(epoch_iterator):
-        # Move tensors to the configured device
-        batch = tuple(t.to(device) for t in batch)
-        x, y = batch
+    total_step = len(trainloader)
+    best_acc = 0
+    log("Training Start...")
+    log("Epoch num: ".format(args.epoch))
+    for epoch in range(args.epoch):
+        log("Epoch: {}".format(epoch + 1))
+        model.train()
+        epoch_iterator = tqdm(trainloader,
+                              desc="Training (X / X Steps) (loss=X.X)",
+                              bar_format="{l_bar}{r_bar}",
+                              dynamic_ncols=True
+                              )
+        for i, batch in enumerate(epoch_iterator):
+            # Move tensors to the configured device
+            batch = tuple(t.to(device) for t in batch)
+            x, y = batch
 
-        if args.nn == 'cnn':
-            y = y.to(torch.long)
-            y = y.squeeze()
+            if args.nn == 'cnn':
+                y = y.to(torch.long)
+                y = y.squeeze()
 
-        # Forward pass
-        outputs = model(x)
-        # log("outputs.type: {}".format(outputs.dtype))
-        # log("y (shape={}): \n{}".format(y.shape, y))
-        # log("y.type: {}".format(y.dtype))
-        # log("outputs (shape={}): \n{}".format(outputs.shape, outputs))
-        loss = criterion(outputs, y)
+            # Forward pass
+            outputs = model(x)
+            # log("outputs.type: {}".format(outputs.dtype))
+            # log("y (shape={}): \n{}".format(y.shape, y))
+            # log("y.type: {}".format(y.dtype))
+            # log("outputs (shape={}): \n{}".format(outputs.shape, outputs))
+            loss = criterion(outputs, y)
 
-        # Backward and optimize
-        optimizer.zero_grad()
-        loss.backward()
-        optimizer.step()
+            # Backward and optimize
+            optimizer.zero_grad()
+            loss.backward()
+            optimizer.step()
 
-        wandb.log({'train_loss': loss.item()})
-        epoch_iterator.set_description("Training (%d / %d Steps)(loss=%2.5f)" % (i + 1, total_step, loss.item()))
+            wandb.log({'train_loss': loss.item()})
+            epoch_iterator.set_description("Training (%d / %d Steps)(loss=%2.5f)" % (i + 1, total_step, loss.item()))
 
-        if (i + 1) % args.eval_every == 0:
-            if args.nn == 'fnn':
-                accuracy = valid(model, testloader)
-            elif args.nn == 'cnn':
-                accuracy = valid_1d(model, testloader)
-            else:
-                log("Error nn")
-                exit(1)
-            if best_acc < accuracy:
-                best_acc = accuracy
-                save_model(model)
-                wandb.log({'Best Accuracy until Now': best_acc})
-            model.train()
-log("Best Accuracy: {}".format(best_acc))
-log("Training... Done!")
+            if (i + 1) % args.eval_every == 0:
+                if args.nn == 'fnn':
+                    accuracy = valid(model, testloader)
+                elif args.nn == 'cnn':
+                    accuracy = valid_1d(model, testloader)
+                else:
+                    log("Error nn")
+                    exit(1)
+                if best_acc < accuracy:
+                    best_acc = accuracy
+                    save_model(model)
+                    wandb.log({'Best Accuracy until Now': best_acc})
+                model.train()
+    log("Best Accuracy: {}".format(best_acc))
+    log("Training... Done!")
 # python3 train.py --c_type torc --d 3 --k 2 --p 0.010 --epoch 10
 # nohup python3 train.py --c_type torc --d 3 --k 2 --p 0.010 --epoch 10 > logs/ffn_d3_k2_p0.010_e10.log &
 # nohup python3 train.py --c_type torc --d 3 --k 2 --p 0.030 --epoch 10 > logs/ffn_d3_k2_p0.020_e10.log &
