@@ -149,9 +149,10 @@ def valid(model, test_loader):
     return accuracy
 
 
+device = torch.device('cuda:{}'.format(args.gpu) if torch.cuda.is_available() else 'cpu')
+
 if __name__ == "__main__":
     # device = torch.device('cpu')
-    device = torch.device('cuda:{}'.format(args.gpu) if torch.cuda.is_available() else 'cpu')
 
     model = get_model()
     model.to(device)
