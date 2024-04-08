@@ -22,7 +22,8 @@ ps = torch.linspace(0.01, 0.20, 20)
 
 model = get_model()
 
-accs = []
+accs = np.zeros(20)
+i = 0
 
 log("Eval...")
 
@@ -51,7 +52,8 @@ for p in ps:
     model.eval()
 
     acc = valid_eval(model, test_loader)
-    accs.append(accs)
+    accs[i] = acc
+    i += 1
     log("p {} acc: {}".format(format(p, '.3f'), acc))
 log("accs: \n{}".format(np.array(accs)))
 log("Eval... Done.")
