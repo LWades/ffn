@@ -16,7 +16,6 @@ key_syndrome = 'syndromes'
 key_logical_error = 'logical_errors'
 pwd_trndt = '/root/Surface_code_and_Toric_code/{}_pe/'.format(args.c_type)
 pwd_model = '/root/ffn/output/'
-device = torch.device('cuda:{}'.format(args.gpu) if torch.cuda.is_available() else 'cpu')
 
 ps = torch.linspace(0.01, 0.20, 20)
 
