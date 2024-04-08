@@ -175,7 +175,7 @@ model = get_model()
 model.to(device)
 if args.nn == 'cnn':
     trainloader, testloader = get_loader_sur_img()
-else:
+elif args.nn == 'fnn':
     trainloader, testloader = get_loader()
 set_seed(args)
 if args.nn == 'fnn':
@@ -282,3 +282,6 @@ log("Training... Done!")
 
 
 # nohup python3 train.py --name cnn_5_0.10-1e7 --nn cnn --c_type sur --d 5 --k 1 --p 0.10 --epoch 20 --trnsz 10000000 --gpu 0 --work 2 > logs/cnn_5_0.10-1e7_0.log &
+
+# fnn 3
+# nohup python3 train.py --name fnn_3_0.10-5e6 --nn fnn --c_type sur --d 3 --k 1 --p 0.10 --epoch 20 --trnsz 5000000 --gpu 1 --work 1 > logs/fnn_3_0.10-5e6_0.log &
