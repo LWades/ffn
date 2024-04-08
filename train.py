@@ -279,3 +279,6 @@ log("Training... Done!")
 # nohup python3 train.py --name cnn_11_0.10 --nn cnn --c_type sur --d 11 --k 1 --p 0.100 --epoch 17 --trnsz 10000000 --gpu 1 --work 2 > logs/cnn_d11_k1_p0.100_e20_1.log &
 # nohup python3 train.py --name cnn_11_0.10-5e6 --nn cnn --c_type sur --d 11 --k 1 --p 0.100 --epoch 20 --trnsz 10000000 --gpu 0 --work 2 > logs/cnn_d11_k1_p0.100_e20_2.log &
 # nohup python3 train.py --name cnn_11_0.10-5e6 --nn cnn --c_type sur --d 11 --k 1 --p 0.100 --epoch 20 --trnsz 5000000 --gpu 0 --work 2 > logs/cnn_d11_k1_p0.100_e20_3.log &
+
+
+# nohup python3 train.py --name cnn_5_0.10-1e7 --nn cnn --c_type sur --d 5 --k 1 --p 0.10 --epoch 20 --trnsz 10000000 --gpu 0 --work 2 > logs/cnn_5_0.10-1e7_0.log &

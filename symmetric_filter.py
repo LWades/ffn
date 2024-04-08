@@ -83,7 +83,6 @@ class SymmetricFilter:
                 elif self.symmetric_dicts[bs] < self.rep_limit:
                     self.symmetric_dicts[bs] += 1
 
-
     """
     如果存在重复并次数超过了rep_limit，就返回 False，表示抛弃这个错误症状，否则为 True，加入训练集
     """
@@ -99,7 +98,6 @@ class SymmetricFilter:
         # 过了这么多关，可以加入到训练集了，把它所有对称的都加进去
         self.add(symmetric_syndrome)
         return True, num
-
 
     # return False 有
     # return True 没有
@@ -121,7 +119,6 @@ class SymmetricFilter:
         return self.symmetric_dicts.__len__()
 
 
-
 def get_data(file_name):
     with h5py.File(file_name, 'r') as f:
         syndromes = f['syndromes'][()]
@@ -135,8 +132,11 @@ s_types, d, rep_limit, trnsz = args.sym, args.d, args.limit, args.trnsz
 def sym_eval():
     num_max_repeat = 0
     num_sum_repeat = 0
-    file_name = "/root/Surface_code_and_Toric_code/{}_pe/{}_d{}_p{}_trnsz{}_seed{}.hdf5".format(args.c_type, args.c_type,
-                                                                                         args.d, format(args.p, '.3f'), args.trnsz, args.seed)
+    file_name = "/root/Surface_code_and_Toric_code/{}_pe/{}_d{}_p{}_trnsz{}_seed{}.hdf5".format(args.c_type,
+                                                                                                args.c_type,
+                                                                                                args.d,
+                                                                                                format(args.p, '.3f'),
+                                                                                                args.trnsz, args.seed)
     symmetric_filter = SymmetricFilter(d, s_types, rep_limit)
     syndromes, logical_errors = get_data(file_name)
     for i in tqdm(range(len(syndromes))):
@@ -153,8 +153,11 @@ def sym_zip():
     num_max_repeat = 0
     num_sum_repeat = 0
     symmetric_filter = SymmetricFilter(d, s_types, rep_limit)
-    file_name = "/root/Surface_code_and_Toric_code/{}_pe/{}_d{}_p{}_trnsz{}_seed{}.hdf5".format(args.c_type, args.c_type,
-                                                                                         args.d, format(args.p, '.3f'), args.poolsz, args.seed)
+    file_name = "/root/Surface_code_and_Toric_code/{}_pe/{}_d{}_p{}_trnsz{}_seed{}.hdf5".format(args.c_type,
+                                                                                                args.c_type,
+                                                                                                args.d,
+                                                                                                format(args.p, '.3f'),
+                                                                                                args.poolsz, args.seed)
     syndromes, logical_errors = get_data(file_name)
     syndromes_zip, logical_errors_zip = [], []
     count = 0
@@ -170,8 +173,15 @@ def sym_zip():
             syndromes_zip.append(syndromes[i])
             logical_errors_zip.append(logical_errors[i])
             count += 1
-    file_name_zip = "/root/Surface_code_and_Toric_code/{}_pe_zip/{}_d{}_p{}_trnsz{}_limit{}_seed{}".format(args.c_type, args.c_type,
-                                                                                         args.d, format(args.p, '.3f'), args.trnsz, args.limit, args.seed)
+    file_name_zip = "/root/Surface_code_and_Toric_code/{}_pe_zip/{}_d{}_p{}_trnsz{}_limit{}_seed{}".format(args.c_type,
+                                                                                                           args.c_type,
+                                                                                                           args.d,
+                                                                                                           format(
+                                                                                                               args.p,
+                                                                                                               '.3f'),
+                                                                                                           args.trnsz,
+                                                                                                           args.limit,
+                                                                                                           args.seed)
     for s_type in s_types:
         file_name_zip = file_name_zip + "_" + s_type
     file_name_zip = file_name_zip + ".hdf5"
@@ -255,6 +265,10 @@ if __name__ == '__main__':
 
 # all
 # nohup python3 symmetric_filter.py --zip 0 --c_type torc --d 3 --p 0.010 --trnsz 10000000 --sym 'all' > logs/symmetric_filter_80.log &
+# nohup python3 symmetric_filter.py --zip 0 --c_type torc --d 5 --p 0.010 --trnsz 10000000 --sym 'all' > logs/symmetric_filter_81.log &
+# nohup python3 symmetric_filter.py --zip 0 --c_type torc --d 5 --p 0.050 --trnsz 10000000 --sym 'all' > logs/symmetric_filter_84.log &
+# nohup python3 symmetric_filter.py --zip 0 --c_type torc --d 7 --p 0.010 --trnsz 10000000 --sym 'all' > logs/symmetric_filter_82.log &
+# nohup python3 symmetric_filter.py --zip 0 --c_type torc --d 9 --p 0.010 --trnsz 10000000 --sym 'all' > logs/symmetric_filter_83.log &
 
 # symmetric_filter = SymmetricFilter(d, s_types, rep_limit)
 #
@@ -283,4 +297,3 @@ if __name__ == '__main__':
 #
 # log(f2)
 # log(symmetric_filter.get_size())
-

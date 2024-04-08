@@ -86,6 +86,9 @@ class CNN(nn.Module):
 
             # if args.d > 3:
             #     self.conv_layers.append(nn.MaxPool2d(kernel_size=2, stride=2))
+            # 每隔一层添加池化层
+            if i % 2 == 1:  # 在每两个卷积层之后添加一个池化层
+                self.conv_layers.append(nn.MaxPool2d(kernel_size=2, stride=2))
 
         self.flatten = nn.Flatten()
         self.dense_layers = nn.ModuleList()
@@ -95,13 +98,18 @@ class CNN(nn.Module):
         # out_channels = 32 * (2 ** (CL - 1))
         # feature_map_size = 64 // (2 ** (CL // 2))
         # self.conv_output_size = out_channels * feature_map_size * feature_map_size
-        if args.d == 3:
-            feature_map_size = 5
-            self.conv_output_size = out_channels * feature_map_size * feature_map_size
-        else:
-            feature_map_size = 2 * args.d - 1
-            self.conv_output_size = out_channels * feature_map_size * feature_map_size
-            # self.conv_output_size = out_channels * (feature_map_size // 2 ** CL) * (feature_map_size // 2 ** CL)
+        # if args.d == 3:
+        #     feature_map_size = 5
+        #     self.conv_output_size = out_channels * feature_map_size * feature_map_size
+        # else:
+        #     feature_map_size = 2 * args.d - 1
+        #     self.conv_output_size = out_channels * feature_map_size * feature_map_size
+        #     # self.conv_output_size = out_channels * (feature_map_size // 2 ** CL) * (feature_map_size // 2 ** CL)
+
+        # 根据池化层数量调整feature_map_size的计算
+        pooling_layers = (CL + 1) // 2  # 计算池化层的数量
+        feature_map_size = 64 // (2 ** pooling_layers)  # 调整尺寸计算以考虑池化层
+        self.conv_output_size = out_channels * feature_map_size * feature_map_size
 
         for i in range(DL):
             in_features = self.conv_output_size if i == 0 else N
@@ -109,7 +117,6 @@ class CNN(nn.Module):
             self.dense_layers.append(nn.ReLU())
 
         self.output_layer = nn.Linear(N, output_size)
-
 
     def forward(self, x):
         for layer in self.conv_layers:
