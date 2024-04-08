@@ -58,4 +58,4 @@ log("Eval... Done.")
 # python3 eval_plot.py --name sur-11-0.10-1e7 --dataset sur --model_type Sur_11 --d 11 --p 0.10 --img_size 21 --eval_seed 1 --fp16 --fp16_opt_level O2
 # python3 eval_plot.py --name sur-11-0.10-1e7 --dataset sur --model_type Sur_11 --d 11 --p 0.10 --img_size 21 --eval_seed 1 --fp16 --fp16_opt_level O2
 # python3 eval_plot.py --dataset torc --model_type Sur_11 --d 11 --p 0.10 --img_size 21 --eval_seed 1 --fp16 --fp16_opt_level O2
-# python3 eval_plot.py --nn fnn --c_type torc --d 5 --k 2 --p 0.10 --eval_seed 1
+# python3 eval_fnn.py --nn fnn --c_type torc --d 5 --k 2 --p 0.10 --eval_seed 1
