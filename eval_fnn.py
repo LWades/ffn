@@ -55,7 +55,7 @@ for p in ps:
     accs[i] = acc
     i += 1
     log("p {} acc: {}".format(format(p, '.3f'), acc))
-log("accs: \n{}".format(np.array(accs)))
+log("accs: \n{}".format(accs))
 log("Eval... Done.")
 # python3 eval_plot.py --c_type sur --d 11 --name sur-11-0.10-1e7
 # python3 eval_plot.py --name sur-11-0.10-1e7 --dataset sur --model_type Sur_11 --d 11 --p 0.10 --img_size 21 --eval_seed 1 --fp16 --fp16_opt_level O2
