@@ -44,7 +44,7 @@ for p in ps:
     log("test_loader.dataset type: {}".format(type(test_loader.dataset)))
     log("test_loader.dataset: {}".format(test_loader.dataset))
 
-    model_name = 'fnn_{}_{}_5e6_checkpoint.bin'.format(args.d, format(args.p, '.2f'))
+    model_name = 'fnn_{}_{}-5e6_checkpoint.bin'.format(args.d, format(args.p, '.2f'))
     log("model: {}".format(model_name))
     model.load_state_dict(torch.load(pwd_model + model_name))
     model.eval()
