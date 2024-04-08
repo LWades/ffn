@@ -18,6 +18,7 @@ CONFIGS = {
 }
 config = CONFIGS['ffn']
 
+
 class AverageMeter(object):
 
     def __init__(self):
@@ -50,7 +51,7 @@ def set_seed(args):
     torch.cuda.manual_seed_all(args.seed)
 
 
-def valid_1d(args, model, test_loader, global_step):
+def valid_1d(model, test_loader):
     # Validation!
     eval_losses = AverageMeter()
     model.eval()
@@ -100,9 +101,7 @@ def valid_1d(args, model, test_loader, global_step):
     return accuracy
 
 
-
-
-def valid(args, model, test_loader, global_step):
+def valid(model, test_loader):
     # Validation!
     eval_losses = AverageMeter()
     model.eval()
@@ -150,6 +149,16 @@ def valid(args, model, test_loader, global_step):
     return accuracy
 
 
+# device = torch.device('cpu')
+device = torch.device('cuda:{}'.format(args.gpu) if torch.cuda.is_available() else 'cpu')
+
+model = get_model()
+model.to(device)
+if args.nn == 'cnn':
+    trainloader, testloader = get_loader_sur_img()
+elif args.nn == 'fnn':
+    trainloader, testloader = get_loader()
+
 wandb_name = f"{args.nn}_d{args.d}_p{args.p}_trnsz{args.trnsz}_ep{args.epoch}"
 if args.zip == 1:
     wandb_name += f"_zip_limit{args.limit}"
@@ -168,15 +177,6 @@ wandb.init(
     }
 )
 
-# device = torch.device('cpu')
-device = torch.device('cuda:{}'.format(args.gpu) if torch.cuda.is_available() else 'cpu')
-
-model = get_model()
-model.to(device)
-if args.nn == 'cnn':
-    trainloader, testloader = get_loader_sur_img()
-elif args.nn == 'fnn':
-    trainloader, testloader = get_loader()
 set_seed(args)
 if args.nn == 'fnn':
     criterion = nn.BCEWithLogitsLoss()
@@ -225,9 +225,9 @@ for epoch in range(args.epoch):
 
         if (i + 1) % args.eval_every == 0:
             if args.nn == 'fnn':
-                accuracy = valid(args, model, testloader, i + 1)
+                accuracy = valid(model, testloader)
             elif args.nn == 'cnn':
-                accuracy = valid_1d(args, model, testloader, i + 1)
+                accuracy = valid_1d(model, testloader)
             else:
                 log("Error nn")
                 exit(1)
@@ -283,5 +283,12 @@ log("Training... Done!")
 
 # nohup python3 train.py --name cnn_5_0.10-1e7 --nn cnn --c_type sur --d 5 --k 1 --p 0.10 --epoch 20 --trnsz 10000000 --gpu 0 --work 2 > logs/cnn_5_0.10-1e7_0.log &
 
-# fnn 3
+# fnn 3 5 7 5e6
 # nohup python3 train.py --name fnn_3_0.10-5e6 --nn fnn --c_type torc --d 3 --k 2 --p 0.10 --epoch 20 --trnsz 5000000 --gpu 1 --work 1 > logs/fnn_3_0.10-5e6_0.log &
+# nohup python3 train.py --name fnn_5_0.10-5e6 --nn fnn --c_type torc --d 5 --k 2 --p 0.10 --epoch 20 --trnsz 5000000 --gpu 2 --work 1 > logs/fnn_5_0.10-5e6_0.log &
+# nohup python3 train.py --name fnn_7_0.10-5e6 --nn fnn --c_type torc --d 7 --k 2 --p 0.10 --epoch 20 --trnsz 5000000 --gpu 3 --work 1 > logs/fnn_7_0.10-5e6_0.log &
+# nohup python3 train.py --name fnn_9_0.10-5e6 --nn fnn --c_type torc --d 9 --k 2 --p 0.10 --epoch 20 --trnsz 5000000 --gpu 0 --work 1 > logs/fnn_9_0.10-5e6_0.log &
+# nohup python3 train.py --name fnn_3_0.07-5e6 --nn fnn --c_type torc --d 3 --k 2 --p 0.07 --epoch 20 --trnsz 5000000 --gpu 1 --work 1 > logs/fnn_3_0.07-5e6_0.log &
+# nohup python3 train.py --name fnn_5_0.07-5e6 --nn fnn --c_type torc --d 5 --k 2 --p 0.07 --epoch 20 --trnsz 5000000 --gpu 2 --work 1 > logs/fnn_5_0.07-5e6_0.log &
+# nohup python3 train.py --name fnn_7_0.07-5e6 --nn fnn --c_type torc --d 7 --k 2 --p 0.07 --epoch 20 --trnsz 5000000 --gpu 3 --work 1 > logs/fnn_7_0.07-5e6_0.log &
+# nohup python3 train.py --name fnn_9_0.07-5e6 --nn fnn --c_type torc --d 9 --k 2 --p 0.07 --epoch 20 --trnsz 5000000 --gpu 0 --work 1 > logs/fnn_9_0.07-5e6_0.log &
