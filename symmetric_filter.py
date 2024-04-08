@@ -253,6 +253,9 @@ if __name__ == '__main__':
 # nohup python3 symmetric_filter.py --zip 0 --c_type torc --d 9 --p 0.150 --trnsz 10000000 --sym 'rf' > logs/symmetric_filter_72.log &
 # nohup python3 symmetric_filter.py --zip 0 --c_type torc --d 9 --p 0.150 --trnsz 10000000 --sym 'rt' > logs/symmetric_filter_73.log &
 
+# all
+# nohup python3 symmetric_filter.py --zip 0 --c_type torc --d 3 --p 0.010 --trnsz 10000000 --sym 'all' > logs/symmetric_filter_80.log &
+
 # symmetric_filter = SymmetricFilter(d, s_types, rep_limit)
 #
 # syndrome01 = np.array([0, 1, 0,

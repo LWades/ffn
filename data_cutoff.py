@@ -3,8 +3,8 @@ from utils import log
 import h5py
 
 path_data = '/root/Surface_code_and_Toric_code/{}_pe/'.format(args.c_type)
-filename_read_data = '{}_d{}_p{}_trnsz{}_imgsdr_seed0.hdf5'.format(args.c_type, args.d, format(args.p, '.3f'), args.poolsz)
-filename_write_data = '{}_d{}_p{}_trnsz{}_imgsdr_seed0.hdf5'.format(args.c_type, args.d, format(args.p, '.3f'), args.trnsz)
+filename_read_data = '{}_d{}_p{}_trnsz{}_seed0.hdf5'.format(args.c_type, args.d, format(args.p, '.3f'), args.poolsz)
+filename_write_data = '{}_d{}_p{}_trnsz{}_seed0.hdf5'.format(args.c_type, args.d, format(args.p, '.3f'), args.trnsz)
 
 log("Cut off...")
 with h5py.File(path_data + filename_read_data, 'r') as f:
