@@ -26,7 +26,7 @@ accs = []
 log("Eval...")
 
 for p in ps:
-    filename_test_data = pwd_trndt + '{}_d{}_p{}_trnsz{}_imgsdr_eval_seed{}.hdf5'.format(args.c_type, args.d, format(p, '.3f'), 10000, args.eval_seed)
+    filename_test_data = pwd_trndt + '{}_d{}_p{}_trnsz{}_eval_seed{}.hdf5'.format(args.c_type, args.d, format(p, '.3f'), 10000, args.eval_seed)
     log("test_data: {}".format(filename_test_data))
     with h5py.File(filename_test_data, 'r') as f:
         test_syndrome = f[key_syndrome][()]
