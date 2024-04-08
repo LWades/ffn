@@ -53,7 +53,7 @@ for p in ps:
     acc = valid_eval(model, test_loader)
     accs.append(accs)
     log("p {} acc: {}".format(format(p, '.3f'), acc))
-log("accs: \n{}".format(accs))
+log(accs)
 log("Eval... Done.")
 # python3 eval_plot.py --c_type sur --d 11 --name sur-11-0.10-1e7
 # python3 eval_plot.py --name sur-11-0.10-1e7 --dataset sur --model_type Sur_11 --d 11 --p 0.10 --img_size 21 --eval_seed 1 --fp16 --fp16_opt_level O2
