@@ -16,6 +16,7 @@ key_syndrome = 'syndromes'
 key_logical_error = 'logical_errors'
 pwd_trndt = '/root/Surface_code_and_Toric_code/{}_pe/'.format(args.c_type)
 pwd_model = '/root/ffn/output/'
+device = torch.device('cuda:{}'.format(args.gpu) if torch.cuda.is_available() else 'cpu')
 
 ps = torch.linspace(0.01, 0.20, 20)
 
@@ -47,6 +48,7 @@ for p in ps:
     model_name = 'fnn_{}_{}-5e6_checkpoint.bin'.format(args.d, format(args.p, '.2f'))
     log("model: {}".format(model_name))
     model.load_state_dict(torch.load(pwd_model + model_name))
+    model.to(device)
     model.eval()
 
     acc = valid(model, test_loader)
