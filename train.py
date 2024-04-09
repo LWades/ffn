@@ -324,7 +324,7 @@ if __name__ == "__main__":
 # nohup python3 train.py --nn cnn --c_type sur --d 5 --k 1 --p 0.050 --epoch 20 --trnsz 10000000 --gpu 0 --work 2 > logs/cnn_d5_k1_p0.050_e20_0.log &
 # nohup python3 train.py --nn cnn --c_type sur --d 5 --k 1 --p 0.100 --epoch 20 --trnsz 10000000 --gpu 0 --work 2 > logs/cnn_d5_k1_p0.100_e20_0.log &
 # nohup python3 train.py --nn cnn --c_type sur --d 5 --k 1 --p 0.150 --epoch 20 --trnsz 10000000 --gpu 0 --work 2 > logs/cnn_d5_k1_p0.150_e20_0.log &
-# nohup python3 train.py --name cnn_11_0.10-p --nn cnn --c_type sur --d 11 --k 1 --p 0.100 --epoch 20 --trnsz 10000000 --gpu 0 --work 2 > logs/cnn_d11_k1_p0.100_e20_6.log &
+# nohup python3 train.py --name cnn_11_0.10-p-5e6 --nn cnn --c_type sur --d 11 --k 1 --p 0.100 --epoch 20 --trnsz 5000000 --gpu 1 --work 2 > logs/cnn_d11_k1_p0.100_e20_7.log &
 # nohup python3 train.py --name cnn_11_0.10-5e6 --nn cnn --c_type sur --d 11 --k 1 --p 0.100 --epoch 20 --trnsz 10000000 --gpu 0 --work 2 > logs/cnn_d11_k1_p0.100_e20_2.log &
 # nohup python3 train.py --name cnn_11_0.10-5e6 --nn cnn --c_type sur --d 11 --k 1 --p 0.100 --epoch 20 --trnsz 5000000 --gpu 0 --work 2 > logs/cnn_d11_k1_p0.100_e20_4.log &
 

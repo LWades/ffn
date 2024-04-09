@@ -173,6 +173,8 @@ def sym_zip():
             syndromes_zip.append(syndromes[i])
             logical_errors_zip.append(logical_errors[i])
             count += 1
+            print("count: {}".format(count), end='\r')
+        print("num_sum_repeat: {}".format(num_sum_repeat), end='\r')
     file_name_zip = "/root/Surface_code_and_Toric_code/{}_pe_zip/{}_d{}_p{}_trnsz{}_limit{}_seed{}".format(args.c_type,
                                                                                                            args.c_type,
                                                                                                            args.d,
