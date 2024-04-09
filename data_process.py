@@ -26,6 +26,8 @@ if args.nn == 'cnn':
 
 if args.zip != 1:
     filename_train_data = filename_train_data + "_seed{}.hdf5".format(args.seed)
+else:
+    filename_train_data = filename_train_data + ".hdf5".format(args.seed)
 # /root/qecGPT/qec/trndt/toricode/torc_d3_0.010_trnsz10000000.npz
 
 
