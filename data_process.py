@@ -11,8 +11,8 @@ filename_test_data = '{}_pe/{}_d{}_p{}_trnsz{}_eval_seed1.hdf5'.format(args.c_ty
 
 
 if args.zip == 1:
-    filename_train_data = "{}_pe_zip/{}_d{}_p{}_trnsz{}_limit{}".format(args.c_type, args.c_type,
-                                                                                         args.d, format(args.p, '.3f'), args.trnsz, args.limit)
+    filename_train_data = "{}_pe_zip/{}_d{}_p{}_trnsz{}_limit{}_seed{}".format(args.c_type, args.c_type,
+                                                                                         args.d, format(args.p, '.3f'), args.trnsz, args.limit, args.seed)
     for s_type in args.sym:
         filename_train_data = filename_train_data + "_" + s_type
 else:
@@ -56,6 +56,17 @@ class SurImgDataset(Dataset):
         # log("1 {}".format(syndrome_data))
         # log("2 {}".format(logical_error_data))
         return syndrome_data, logical_error_data
+
+
+class SurDataset(Dataset):
+    def __init__(self, data):
+        self.data = data
+
+    def __len__(self):
+        return len(self.data['image_syndromes'])
+
+    def __getitem__(self, idx):
+        return self.data['image_syndromes'][idx], self.data['logical_errors'][idx]
 
 
 def get_loader():

@@ -9,10 +9,10 @@ from args import args
 from train import valid_eval
 from network import get_model
 import numpy as np
-from data_process import ToricDataset
+from data_process import SurDataset
 
 
-key_syndrome = 'syndromes'
+key_syndrome = 'image_syndromes'
 key_logical_error = 'logical_errors'
 pwd_trndt = '/root/Surface_code_and_Toric_code/{}_pe/'.format(args.c_type)
 pwd_model = '/root/ffn/output/'
@@ -28,12 +28,12 @@ i = 0
 log("Eval...")
 
 for p in ps:
-    filename_test_data = pwd_trndt + '{}_d{}_p{}_trnsz{}_eval_seed{}.hdf5'.format(args.c_type, args.d, format(p, '.3f'), 10000, args.eval_seed)
+    filename_test_data = pwd_trndt + '{}_d{}_p{}_trnsz{}_imgsdr_eval_seed{}.hdf5'.format(args.c_type, args.d, format(p, '.3f'), 200000, args.eval_seed)
     log("test_data: {}".format(filename_test_data))
     with h5py.File(filename_test_data, 'r') as f:
         test_syndrome = f[key_syndrome][()]
         test_logical_error = f[key_logical_error][()]
-        testset = ToricDataset({key_syndrome: test_syndrome, key_logical_error: test_logical_error})
+        testset = SurDataset({key_syndrome: test_syndrome, key_logical_error: test_logical_error})
 
     test_sampler = SequentialSampler(testset)
     test_loader = DataLoader(testset,
@@ -45,7 +45,8 @@ for p in ps:
     log("test_loader.dataset type: {}".format(type(test_loader.dataset)))
     log("test_loader.dataset: {}".format(test_loader.dataset))
 
-    model_name = 'fnn_{}_{}-5e6_checkpoint.bin'.format(args.d, format(args.p, '.2f'))
+    model_name = '{}_checkpoint.bin'.format(args.name)
+    # model_name = 'fnn_{}_{}-5e6_checkpoint.bin'.format(args.d, format(args.p, '.2f'))
     log("model: {}".format(model_name))
     model.load_state_dict(torch.load(pwd_model + model_name))
     model.to(device)
@@ -57,4 +58,5 @@ for p in ps:
     log("p {} acc: {}".format(format(p, '.3f'), acc))
 log("accs: \n{}".format(accs))
 log("Eval... Done.")
-# nohup python3 eval_fnn.py --nn cnn --c_type torc --d 11 --k 2 --p 0.10 --eval_seed 1 > logs/ef.log &
+# nohup python3 eval_cnn.py --nn cnn --c_type torc --d 11 --k 2 --p 0.10 --eval_seed 1 > logs/ef.log &
+# nohup python3 eval_cnn.py --name cnn_11_0.10-p --nn cnn --c_type sur --d 11 --k 2 --p 0.10 --eval_seed 2 --trnsz 200000 > logs/ef.log &

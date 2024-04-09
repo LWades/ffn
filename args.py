@@ -49,6 +49,8 @@ parser.add_argument('--nn', type=str, default='fnn', choices=['fnn', 'cnn', 'rnn
 parser.add_argument('--work', type=int, default=1,
                     help='num of work')
 
+parser.add_argument('--traindata', type=str, default="")
+
 parser.add_argument('--eval_seed', type=int, default=1)
 
 args = parser.parse_args()

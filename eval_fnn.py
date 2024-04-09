@@ -45,7 +45,8 @@ for p in ps:
     log("test_loader.dataset type: {}".format(type(test_loader.dataset)))
     log("test_loader.dataset: {}".format(test_loader.dataset))
 
-    model_name = 'fnn_{}_{}-5e6_checkpoint.bin'.format(args.d, format(args.p, '.2f'))
+    model_name = '{}_checkpoint.bin'.format(args.name)
+    # model_name = 'fnn_{}_{}-5e6_checkpoint.bin'.format(args.d, format(args.p, '.2f'))
     log("model: {}".format(model_name))
     model.load_state_dict(torch.load(pwd_model + model_name))
     model.to(device)
@@ -63,3 +64,4 @@ log("Eval... Done.")
 # python3 eval_plot.py --dataset torc --model_type Sur_11 --d 11 --p 0.10 --img_size 21 --eval_seed 1 --fp16 --fp16_opt_level O2
 # python3 eval_fnn.py --nn fnn --c_type torc --d 5 --k 2 --p 0.10 --eval_seed 1
 # nohup python3 eval_fnn.py --nn fnn --c_type torc --d 5 --k 2 --p 0.10 --eval_seed 1 > logs/ef.log &
+# nohup python3 eval_fnn.py --nn fnn --c_type torc --d 5 --k 2 --p 0.07 --eval_seed 1 > logs/ef.log &

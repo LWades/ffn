@@ -327,6 +327,7 @@ if __name__ == "__main__":
 # nohup python3 train.py --name cnn_11_0.10-p-5e6 --nn cnn --c_type sur --d 11 --k 1 --p 0.100 --epoch 20 --trnsz 5000000 --gpu 1 --work 2 > logs/cnn_d11_k1_p0.100_e20_7.log &
 # nohup python3 train.py --name cnn_11_0.10-5e6 --nn cnn --c_type sur --d 11 --k 1 --p 0.100 --epoch 20 --trnsz 10000000 --gpu 0 --work 2 > logs/cnn_d11_k1_p0.100_e20_2.log &
 # nohup python3 train.py --name cnn_11_0.10-5e6 --nn cnn --c_type sur --d 11 --k 1 --p 0.100 --epoch 20 --trnsz 5000000 --gpu 0 --work 2 > logs/cnn_d11_k1_p0.100_e20_4.log &
+# nohup python3 train.py --name cnn_11_0.10-5e6-0409 --nn cnn --c_type sur --d 11 --k 1 --p 0.100 --epoch 20 --trnsz 5000000 --gpu 0 --work 2 > logs/cnn_d11_k1_p0.100_e20_5.log &
 
 
 # nohup python3 train.py --name cnn_5_0.10-1e7-p --nn cnn --c_type sur --d 5 --k 1 --p 0.10 --epoch 20 --trnsz 10000000 --gpu 0 --work 2 > logs/cnn_5_0.10-1e7_0.log &
@@ -340,3 +341,5 @@ if __name__ == "__main__":
 # nohup python3 train.py --name fnn_5_0.07-5e6 --nn fnn --c_type torc --d 5 --k 2 --p 0.07 --epoch 20 --trnsz 5000000 --gpu 2 --work 1 > logs/fnn_5_0.07-5e6_0.log &
 # nohup python3 train.py --name fnn_7_0.07-5e6 --nn fnn --c_type torc --d 7 --k 2 --p 0.07 --epoch 20 --trnsz 5000000 --gpu 3 --work 1 > logs/fnn_7_0.07-5e6_0.log &
 # nohup python3 train.py --name fnn_9_0.07-5e6 --nn fnn --c_type torc --d 9 --k 2 --p 0.07 --epoch 20 --trnsz 5000000 --gpu 0 --work 1 > logs/fnn_9_0.07-5e6_0.log &
+
+# nohup python3 train.py --name fnn_7_0.07-5e6-zip --nn fnn --zip 1 --c_type torc --d 7 --k 2 --p 0.07 --sym all --epoch 20 --trnsz 5000000 --gpu 0 --work 1 > logs/fnn_7_0.07-5e6_0.log &
