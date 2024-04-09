@@ -342,4 +342,4 @@ if __name__ == "__main__":
 # nohup python3 train.py --name fnn_7_0.07-5e6 --nn fnn --c_type torc --d 7 --k 2 --p 0.07 --epoch 20 --trnsz 5000000 --gpu 3 --work 1 > logs/fnn_7_0.07-5e6_0.log &
 # nohup python3 train.py --name fnn_9_0.07-5e6 --nn fnn --c_type torc --d 9 --k 2 --p 0.07 --epoch 20 --trnsz 5000000 --gpu 0 --work 1 > logs/fnn_9_0.07-5e6_0.log &
 
-# nohup python3 train.py --name fnn_7_0.07-5e6-zip --nn fnn --zip 1 --c_type torc --d 7 --k 2 --p 0.07 --sym all --epoch 20 --trnsz 5000000 --gpu 0 --work 1 > logs/fnn_7_0.07-5e6_0.log &
+# nohup python3 train.py --name fnn_7_0.07-5e6-zip-lm10000 --nn fnn --zip 1 --c_type torc --d 7 --k 2 --p 0.07 --sym all --limit 10000 --epoch 20 --trnsz 5000000 --gpu 0 --work 1 > logs/fnn_7_0.07-5e6-zip-lm10000.log &
