@@ -56,9 +56,9 @@ def get_cnn_sur_9():
 
 def get_cnn_sur_11():
     config = ml_collections.ConfigDict()
-    config.DL = 2
-    config.CL = 6
-    config.N = 1024
+    config.DL = 1
+    config.CL = 4
+    config.N = 512
     return config
 
 
