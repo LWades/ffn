@@ -3,6 +3,7 @@ import torch.nn as nn
 import torchvision
 import torchvision.transforms as transforms
 import config as configs
+import math
 from args import args
 from utils import log
 
@@ -106,9 +107,14 @@ class CNN(nn.Module):
         #     self.conv_output_size = out_channels * feature_map_size * feature_map_size
         #     # self.conv_output_size = out_channels * (feature_map_size // 2 ** CL) * (feature_map_size // 2 ** CL)
 
-        # 根据池化层数量调整feature_map_size的计算
-        pooling_layers = (CL + 1) // 2  # 计算池化层的数量
-        feature_map_size = 64 // (2 ** pooling_layers)  # 调整尺寸计算以考虑池化层
+        # # 根据池化层数量调整feature_map_size的计算
+        # pooling_layers = (CL + 1) // 2  # 计算池化层的数量
+        # feature_map_size = 64 // (2 ** pooling_layers)  # 调整尺寸计算以考虑池化层
+
+        pooling_layers = (CL + 1) // 2
+        feature_map_size = 2 * args.d - 1  # 根据d计算输入尺寸
+        for _ in range(pooling_layers):
+            feature_map_size = math.floor(feature_map_size / 2)
         self.conv_output_size = out_channels * feature_map_size * feature_map_size
 
         for i in range(DL):
