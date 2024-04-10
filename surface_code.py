@@ -98,11 +98,14 @@ def draw_toric_code(d, syndrome):
 
 
 if __name__ == '__main__':
-    d = 3
+    d = 5
     m = 2 * d ** 2 - 1
     # syndrome = np.random.randint(0, 2, size=(1, m))
     # syndrome = np.array([0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0, 1, 0, 0, 0, 0])
-    syndrome = np.array([1., 1., 0., 1., 0., 0., 0., 1., 0., 0., 0., 0.])
+    syndrome = np.array([0., 0., 0., 1., 1., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 1., 1.,
+         0., 0., 0., 1., 0., 1., 1., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 1.,
+         0., 0., 0., 0.])
+    syndrome = np.zeros_like(syndrome)
     # syndrome = np.array([1., 1., 0., 1., 0., 0., 0., 0., 0., 0., 1., 0.])
     image_syndrome = ZX2image_sur(d, syndrome)
     log(image_syndrome)

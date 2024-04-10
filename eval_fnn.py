@@ -65,3 +65,7 @@ log("Eval... Done.")
 # python3 eval_fnn.py --nn fnn --c_type torc --d 5 --k 2 --p 0.10 --eval_seed 1
 # nohup python3 eval_fnn.py --nn fnn --c_type torc --d 5 --k 2 --p 0.10 --eval_seed 1 > logs/ef.log &
 # nohup python3 eval_fnn.py --nn fnn --c_type torc --d 5 --k 2 --p 0.07 --eval_seed 1 > logs/ef.log &
+# python3 eval_fnn.py --name  --nn fnn --c_type torc --d 5 --k 2 --p 0.07 --eval_seed 1
+# python3 eval_fnn.py --name fnn_5_0.07-5e6-zip-lm10000 --nn fnn --c_type torc --d 5 --k 2 --p 0.07 --eval_seed 1
+# python3 eval_fnn.py --name fnn_3_0.07-5e6-zip-lm10000 --nn fnn --c_type torc --d 3 --k 2 --p 0.07 --eval_seed 1
+# python3 eval_fnn.py --name fnn_7_0.07-5e6-zip-lm10000 --nn fnn --c_type torc --d 7 --k 2 --p 0.07 --eval_seed 1
