@@ -195,17 +195,17 @@ def sym_zip():
     return num_sum_repeat, num_max_repeat
 
 
-# if __name__ == '__main__':
-#     if args.zip == 1:
-#         log("symmetry zip...")
-#         num_sum_repeat, num_max_repeat = sym_zip()
-#         log("symmetry zip... Done.")
-#     else:
-#         log("symmetry eval...")
-#         num_sum_repeat, num_max_repeat = sym_eval()
-#         log("symmetry eval... Done.")
-#     log("num_sum_repeat: {}".format(num_sum_repeat))
-#     log("num_max_repeat: {}".format(num_max_repeat))
+if __name__ == '__main__':
+    if args.zip == 1:
+        log("symmetry zip...")
+        num_sum_repeat, num_max_repeat = sym_zip()
+        log("symmetry zip... Done.")
+    else:
+        log("symmetry eval...")
+        num_sum_repeat, num_max_repeat = sym_eval()
+        log("symmetry eval... Done.")
+    log("num_sum_repeat: {}".format(num_sum_repeat))
+    log("num_max_repeat: {}".format(num_max_repeat))
 
 # nohup python3 symmetric_filter.py --zip 0 --c_type torc --d 5 --p 0.010 --trnsz 10000000 --sym 'rf:0' > logs/symmetric_filter_17.log &
 # nohup python3 symmetric_filter.py --zip 0 --c_type torc --d 5 --p 0.050 --trnsz 10000000 --sym 'rf:0' > logs/symmetric_filter_18.log &
@@ -302,31 +302,31 @@ def sym_zip():
 # nohup python3 symmetric_filter.py --zip 0 --c_type torc --d 7 --p 0.070 --trnsz 10000000 --sym 'rf' > logs/symmetric_filter_110.log &
 # nohup python3 symmetric_filter.py --zip 0 --c_type torc --d 7 --p 0.070 --trnsz 10000000 --sym 'rt' > logs/symmetric_filter_111.log &
 
-
-symmetric_filter = SymmetricFilter(d, s_types, rep_limit)
-
-syndrome01 = np.array([0, 1, 0,
-                       0, 0, 1,
-                       0, 0, 0,
-                       0, 0, 1,
-                       0, 0, 1,
-                       0, 0, 0])
-syndrome01 = syndrome01[1:-1]
-log(syndrome01)
-syndrome02 = np.array([0, 1, 1,
-                       0, 0, 0,
-                       0, 0, 0,
-                       0, 0, 1,
-                       0, 1, 0,
-                       0, 0, 0])
-syndrome02 = syndrome02[1:-1]
-log(syndrome02)
-f1 = symmetric_filter.filter(syndrome01)
-
-log(f1)
-log(symmetric_filter.get_size())
-
-f2 = symmetric_filter.filter(syndrome02)
-
-log(f2)
-log(symmetric_filter.get_size())
+#
+# symmetric_filter = SymmetricFilter(d, s_types, rep_limit)
+#
+# syndrome01 = np.array([0, 1, 0,
+#                        0, 0, 1,
+#                        0, 0, 0,
+#                        0, 0, 1,
+#                        0, 0, 1,
+#                        0, 0, 0])
+# syndrome01 = syndrome01[1:-1]
+# log(syndrome01)
+# syndrome02 = np.array([0, 1, 1,
+#                        0, 0, 0,
+#                        0, 0, 0,
+#                        0, 0, 1,
+#                        0, 1, 0,
+#                        0, 0, 0])
+# syndrome02 = syndrome02[1:-1]
+# log(syndrome02)
+# f1 = symmetric_filter.filter(syndrome01)
+#
+# log(f1)
+# log(symmetric_filter.get_size())
+#
+# f2 = symmetric_filter.filter(syndrome02)
+#
+# log(f2)
+# log(symmetric_filter.get_size())
