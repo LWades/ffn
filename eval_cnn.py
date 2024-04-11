@@ -28,7 +28,7 @@ i = 0
 log("Eval...")
 
 for p in ps:
-    filename_test_data = pwd_trndt + '{}_d{}_p{}_trnsz{}_imgsdr_eval_seed{}.hdf5'.format(args.c_type, args.d, format(p, '.3f'), 200000, args.eval_seed)
+    filename_test_data = pwd_trndt + '{}_d{}_p{}_trnsz{}_imgsdr_eval_seed{}.hdf5'.format(args.c_type, args.d, format(p, '.3f'), args.trnsz, args.eval_seed)
     log("test_data: {}".format(filename_test_data))
     with h5py.File(filename_test_data, 'r') as f:
         test_syndrome = f[key_syndrome][()]
@@ -60,3 +60,4 @@ log("accs: \n{}".format(accs))
 log("Eval... Done.")
 # nohup python3 eval_cnn.py --nn cnn --c_type torc --d 11 --k 2 --p 0.10 --eval_seed 1 > logs/ef.log &
 # nohup python3 eval_cnn.py --name cnn_11_0.10-p --nn cnn --c_type sur --d 11 --k 2 --p 0.10 --eval_seed 2 --trnsz 200000 > logs/ef.log &
+# nohup python3 eval_cnn.py --name cnn_11_0.10-5e6-o --nn cnn --c_type sur --d 11 --k 1 --p 0.10 --eval_seed 2 --trnsz 10000 > logs/ef2.log &

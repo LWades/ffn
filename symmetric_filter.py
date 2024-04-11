@@ -302,6 +302,10 @@ if __name__ == '__main__':
 # nohup python3 symmetric_filter.py --zip 0 --c_type torc --d 7 --p 0.070 --trnsz 10000000 --sym 'rf' > logs/symmetric_filter_110.log &
 # nohup python3 symmetric_filter.py --zip 0 --c_type torc --d 7 --p 0.070 --trnsz 10000000 --sym 'rt' > logs/symmetric_filter_111.log &
 
+# nohup python3 symmetric_filter.py --zip 0 --c_type torc --d 5 --p 0.070 --trnsz 10000000 --sym rt > logs/symmetric_filter_120.log &
+# nohup python3 symmetric_filter.py --zip 0 --c_type torc --d 7 --p 0.070 --trnsz 10000000 --sym rt > logs/symmetric_filter_121.log &
+
+
 #
 # symmetric_filter = SymmetricFilter(d, s_types, rep_limit)
 #
