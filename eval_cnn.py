@@ -18,7 +18,8 @@ pwd_trndt = '/root/Surface_code_and_Toric_code/{}_pe/'.format(args.c_type)
 pwd_model = '/root/ffn/output/'
 device = torch.device('cuda:{}'.format(args.gpu) if torch.cuda.is_available() else 'cpu')
 
-ps = torch.linspace(0.01, 0.20, 20)
+# ps = torch.linspace(0.01, 0.20, 20)
+ps = torch.linspace(0.10, 0.20, 11)
 
 model = get_model()
 
@@ -60,4 +61,4 @@ log("accs: \n{}".format(accs))
 log("Eval... Done.")
 # nohup python3 eval_cnn.py --nn cnn --c_type torc --d 11 --k 2 --p 0.10 --eval_seed 1 > logs/ef.log &
 # nohup python3 eval_cnn.py --name cnn_11_0.10-p --nn cnn --c_type sur --d 11 --k 2 --p 0.10 --eval_seed 2 --trnsz 200000 > logs/ef.log &
-# nohup python3 eval_cnn.py --name cnn_11_0.10-5e6-o --nn cnn --c_type sur --d 11 --k 1 --p 0.10 --eval_seed 2 --trnsz 10000 > logs/ef2.log &
+# nohup python3 eval_cnn.py --name cnn_11_0.10-5e6-o --nn cnn --c_type sur --d 11 --k 1 --p 0.10 --eval_seed 1 --trnsz 10000 --gpu 2 > logs/ef2.log &
