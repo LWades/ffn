@@ -98,7 +98,7 @@ def draw_toric_code(d, syndrome):
 
 
 if __name__ == '__main__':
-    d = 5
+    d = 3
     m = 2 * d ** 2 - 1
     # syndrome = np.random.randint(0, 2, size=(1, m))
     # syndrome = np.array([0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0, 1, 0, 0, 0, 0])
