@@ -61,7 +61,7 @@ class SymmetricSyndrome:
 
     def base_syndrome(self):
         offset = self.center_img - self.center
-        b_s = np.zeros(self.syndrome.shape)
+        b_s = np.zeros(self.syndrome.shape, dtype=np.int8)
         new_xs = (self.xs + offset[0]) % (2 * self.d)
         new_ys = (self.ys + offset[1]) % (2 * self.d)
         b_s[new_xs, new_ys] = 1
@@ -69,7 +69,7 @@ class SymmetricSyndrome:
 
     def base_syndrome_xs_ys(self):
         offset = self.center_img - self.center
-        b_s = np.zeros(self.syndrome.shape)
+        b_s = np.zeros(self.syndrome.shape, dtype=np.int8)
         new_xs = (self.xs + offset[0]) % (2 * self.d)
         new_ys = (self.ys + offset[1]) % (2 * self.d)
         b_s[new_xs, new_ys] = 1
@@ -86,7 +86,7 @@ class SymmetricSyndrome:
     """
     def reflection_syndrome(self, axis):
         # log(f"self.center = {self.center}")
-        r_s = np.zeros(self.syndrome.shape)     # base_syndrome
+        r_s = np.zeros(self.syndrome.shape, dtype=np.int8)     # base_syndrome
         if axis == 0:
             axis_symmetry_y = self.center[1]
             for i in range(self.xs.shape[0]):
@@ -131,7 +131,7 @@ class SymmetricSyndrome:
         return r_s
 
     def rotation_syndrome(self, theta):
-        r_s = np.zeros(self.syndrome.shape)
+        r_s = np.zeros(self.syndrome.shape, dtype=np.int8)
         if theta == 0:
             for i in range(self.xs.shape[0]):
                 x, y = self.xs[i], self.ys[i]

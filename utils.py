@@ -11,6 +11,7 @@ def log(info):
 def ZX2image(d, zxsyndrom):
     zxsyndrom = np.insert(zxsyndrom, 0, 0)
     zxsyndrom = np.append(zxsyndrom, 0)
+    # image_syndrome = np.zeros((2 * d, 2 * d))
     image_syndrome = np.zeros((2 * d, 2 * d), dtype=np.int8)
     m_z_stabilizer = d ** 2
 

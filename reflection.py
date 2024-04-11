@@ -18,7 +18,7 @@ class ReflectionSymmetricSyndrome(SymmetricSyndrome):
 
     def base_syndrome(self):
         log(f"self.center = {self.center}")
-        b_s = np.zeros(self.syndrome.shape)     # base_syndrome
+        b_s = np.zeros(self.syndrome.shape, dtype=np.int8)     # base_syndrome
         if self.axis == 0:
             axis_symmetry_y = self.center[1]
             for i in range(self.xs.shape[0]):
