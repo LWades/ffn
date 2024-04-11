@@ -49,7 +49,11 @@ for p in ps:
     model_name = '{}_checkpoint.bin'.format(args.name)
     # model_name = 'fnn_{}_{}-5e6_checkpoint.bin'.format(args.d, format(args.p, '.2f'))
     log("model: {}".format(model_name))
-    model.load_state_dict(torch.load(pwd_model + model_name))
+    state_dict = torch.load(pwd_model + model_name)
+    state_dict = {k: v for k, v in state_dict.items() if
+                  k in model.state_dict() and model.state_dict()[k].shape == v.shape}
+    model.load_state_dict(state_dict, strict=False)
+    # model.load_state_dict(torch.load(pwd_model + model_name))
     model.to(device)
     model.eval()
 
@@ -61,4 +65,5 @@ log("accs: \n{}".format(accs))
 log("Eval... Done.")
 # nohup python3 eval_cnn.py --nn cnn --c_type torc --d 11 --k 2 --p 0.10 --eval_seed 1 > logs/ef.log &
 # nohup python3 eval_cnn.py --name cnn_11_0.10-p --nn cnn --c_type sur --d 11 --k 2 --p 0.10 --eval_seed 2 --trnsz 200000 > logs/ef.log &
-# nohup python3 eval_cnn.py --name cnn_11_0.10-5e6-o --nn cnn --c_type sur --d 11 --k 1 --p 0.10 --eval_seed 1 --trnsz 10000 --gpu 2 > logs/ef2.log &
+# nohup python3 eval_cnn.py --name cnn_11_0.10-5e6-o --nn cnn --c_type sur --d 11 --k 1 --p 0.10 --eval_seed 1 --trnsz 10000 --gpu 1 > logs/ef2.log &
+# nohup python3 eval_cnn.py --name cnn_5_0.10-1e7 --nn cnn --c_type sur --d 5 --k 1 --p 0.10 --eval_seed 1 --trnsz 10000 --gpu 1 > logs/ef2.log &
