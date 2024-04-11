@@ -117,8 +117,13 @@ def valid_1d_eval(model, test_loader):
         # x = x.to(torch.float16)
         # y = y.to(torch.long)
         y = torch.squeeze(y)
+        x = torch.unsqueeze(x, 1)
+        log("x shape: {}".format(x.shape))
+        # x = torch.squeeze(x)
+        # x = x.permute(1, 0, 2, 3)
         y = y.to(torch.long)
         with torch.no_grad():
+            # x  = x.permute(1,0,2,3)
             logits = model(x)
             # logits = model(x)[0]
             # log(f"logits shape: {logits.shape}")
