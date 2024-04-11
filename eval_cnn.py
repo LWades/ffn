@@ -6,7 +6,7 @@ import torch
 from torch.utils.data import Dataset, DataLoader, RandomSampler, DistributedSampler, SequentialSampler
 import h5py
 from args import args
-from train import valid_eval
+from train import valid_1d_eval
 from network import get_model
 import numpy as np
 from data_process import SurDataset
@@ -53,7 +53,7 @@ for p in ps:
     model.to(device)
     model.eval()
 
-    acc = valid_eval(model, test_loader)
+    acc = valid_1d_eval(model, test_loader)
     accs[i] = acc
     i += 1
     log("p {} acc: {}".format(format(p, '.3f'), acc))
