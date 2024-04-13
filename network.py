@@ -94,23 +94,23 @@ class CNN(nn.Module):
             # if args.d > 3:
             #     self.conv_layers.append(nn.MaxPool2d(kernel_size=2, stride=2))
             # 每隔一层添加池化层
-            if i % 2 == 1:  # 在每两个卷积层之后添加一个池化层
-                self.conv_layers.append(nn.MaxPool2d(kernel_size=2, stride=2))
+            # if i % 2 == 1:  # 在每两个卷积层之后添加一个池化层
+            #     self.conv_layers.append(nn.MaxPool2d(kernel_size=2, stride=2))
 
         self.flatten = nn.Flatten()
         self.dense_layers = nn.ModuleList()
 
         # 计算卷积层输出的维度以连接到全连接层
-        self.conv_output_size = out_channels * (64 // 2 ** CL) * (64 // 2 ** CL)
-        out_channels = 32 * (2 ** (CL - 1))
-        feature_map_size = 64 // (2 ** (CL // 2))
-        self.conv_output_size = out_channels * feature_map_size * feature_map_size
-        # if args.d == 3:
-        #     feature_map_size = 5
-        #     self.conv_output_size = out_channels * feature_map_size * feature_map_size
-        # else:
-        #     feature_map_size = 2 * args.d - 1
-        #     self.conv_output_size = out_channels * feature_map_size * feature_map_size
+        # self.conv_output_size = out_channels * (64 // 2 ** CL) * (64 // 2 ** CL)
+        # out_channels = 32 * (2 ** (CL - 1))
+        # feature_map_size = 64 // (2 ** (CL // 2))
+        # self.conv_output_size = out_channels * feature_map_size * feature_map_size
+        if args.d == 3:
+            feature_map_size = 5
+            self.conv_output_size = out_channels * feature_map_size * feature_map_size
+        else:
+            feature_map_size = 2 * args.d - 1
+            self.conv_output_size = out_channels * feature_map_size * feature_map_size
 
         # # 根据池化层数量调整feature_map_size的计算
         # pooling_layers = (CL + 1) // 2  # 计算池化层的数量
@@ -222,7 +222,7 @@ class RNN(nn.Module):
 
     def forward(self, x):
         # 初始化隐藏状态，为每层提供一个初始隐藏状态
-        h0 = torch.zeros(self.num_layers, x.size(0), self.hidden_size)
+        h0 = torch.zeros(self.num_layers, x.size(0), self.hidden_size, device=x.device, dtype=x.dtype)
         # RNN 前向传播，处理完整的序列
         out, _ = self.rnn(x, h0)
         # 获取最后时刻的输出并传给线性层
@@ -248,7 +248,7 @@ def get_model():
         log("init cnn... Done.")
     elif args.nn == 'rnn':
         log("init rnn...")
-        model = RNN(input_size, config.hidden_size, 4, config.layers)
+        model = RNN(2 * args.d ** 2 - 2 * args.d, config.hidden_size, 4, config.layers)
         log("init rnn... Done.")
     return model
 

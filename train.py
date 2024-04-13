@@ -68,6 +68,9 @@ def valid_1d(model, test_loader):
         # y = y.to(torch.long)
         y = torch.squeeze(y)
         y = y.to(torch.long)
+        if args.nn == 'rnn':
+            x = x.unsqueeze(1)
+            x = x.float()
         with torch.no_grad():
             logits = model(x)
             # logits = model(x)[0]
@@ -269,16 +272,16 @@ if __name__ == "__main__":
         wandb_project = "work01"
     else:
         wandb_project = "work02"
-    # wandb.init(
-    #     project=wandb_project,
-    #     name=wandb_name,
-    #     config={
-    #         'd': args.d,
-    #         'p': args.p,
-    #         'train size': args.trnsz,
-    #         'epoch': args.epoch,
-    #     }
-    # )
+    wandb.init(
+        project=wandb_project,
+        name=wandb_name,
+        config={
+            'd': args.d,
+            'p': args.p,
+            'train size': args.trnsz,
+            'epoch': args.epoch,
+        }
+    )
 
     set_seed(args)
     if args.nn == 'fnn':
@@ -313,8 +316,11 @@ if __name__ == "__main__":
                 y = y.squeeze()
             elif args.nn == 'rnn':
                 x = x.unsqueeze(1)
+                x = x.float()
+                y = y.to(torch.long)
+                y = y.squeeze()
             # x.unsqueeze(0)
-            log("x.shape: {}".format(x.shape))
+            # log("x.shape: {}".format(x.shape))
             # Forward pass
             outputs = model(x)
             # log("outputs.type: {}".format(outputs.dtype))
@@ -334,7 +340,7 @@ if __name__ == "__main__":
             if (i + 1) % args.eval_every == 0:
                 if args.nn == 'fnn':
                     accuracy = valid(model, testloader)
-                elif args.nn == 'cnn':
+                elif args.nn == 'cnn' or args.nn == 'rnn':
                     accuracy = valid_1d(model, testloader)
                 else:
                     log("Error nn")
