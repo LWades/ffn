@@ -43,4 +43,6 @@ for p in ps:
         logical_errors_new = f.create_dataset('logical_errors', data=logical_errors, chunks=True, compression="gzip")
 log("img2seq... Done.")
 # python3 img2seq.py --c_type sur --d 3 --trnsz 10000
+# python3 img2seq.py --c_type sur --d 7 --trnsz 10000
+# python3 img2seq.py --c_type sur --d 11 --trnsz 10000
 
