@@ -14,7 +14,9 @@ CONFIGS = {
     'cnn_sur_5': configs.get_cnn_sur_5(),
     'cnn_sur_7': configs.get_cnn_sur_7(),
     'cnn_sur_9': configs.get_cnn_sur_9(),
-    'cnn_sur_11': configs.get_cnn_sur_11()
+    'cnn_sur_11': configs.get_cnn_sur_11(),
+    'cnn_sur_13': configs.get_cnn_sur_13(),
+    'rnn': configs.get_rnn_config()
 }
 
 if args.nn == 'fnn':
@@ -30,6 +32,10 @@ elif args.nn == 'cnn':
         config = CONFIGS['cnn_sur_3']
     elif args.d == 9:
         config = CONFIGS['cnn_sur_9']
+    elif args.d == 13:
+        config = CONFIGS['cnn_sur_13']
+elif args.nn == 'rnn':
+    config = CONFIGS['rnn']
 
 input_size = CONFIGS['ffn'].input_size
 hidden_size = CONFIGS['ffn'].hidden_size
@@ -155,6 +161,26 @@ class SimpleRNN(nn.Module):
         out = self.linear(out[:, -1, :])
         return out
 
+
+class RNN(nn.Module):
+    def __init__(self, input_size, hidden_size, output_size, num_layers):
+        super(RNN, self).__init__()
+        self.hidden_size = hidden_size
+        # RNN 层，设置层数为 num_layers
+        self.num_layers = num_layers
+        self.rnn = nn.RNN(input_size, hidden_size, num_layers=num_layers, batch_first=True)
+        # 输出层
+        self.linear = nn.Linear(hidden_size, output_size)
+
+    def forward(self, x):
+        # 初始化隐藏状态，为每层提供一个初始隐藏状态
+        h0 = torch.zeros(self.num_layers, x.size(0), self.hidden_size)
+        # RNN 前向传播，处理完整的序列
+        out, _ = self.rnn(x, h0)
+        # 获取最后时刻的输出并传给线性层
+        out = self.linear(out[:, -1, :])
+        return out
+
 # # 参数设定
 # input_size = 10  # 输入大小
 # hidden_size = 20  # 隐藏层大小
@@ -172,6 +198,9 @@ def get_model():
         log("init cnn...")
         model = CNN(config.CL, config.DL, config.N, 4)
         log("init cnn... Done.")
+    elif args.nn == 'rnn':
+        log("init rnn...")
+        model = RNN(input_size, config.hidden_size, 4, config.layers)
     return model
 
 

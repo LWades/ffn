@@ -404,3 +404,19 @@ if __name__ == "__main__":
 # nohup python3 train.py --name fnn_3_0.07-5e6 --nn fnn --c_type torc --d 3 --k 2 --p 0.07 --epoch 20 --trnsz 5000000 --gpu 1 --work 1 > logs/fnn_3_0.07-5e6_0.log &
 
 # nohup python3 train.py --name cnn_11_0.10-5e6-o --nn cnn --c_type sur --d 11 --k 1 --p 0.100 --epoch 20 --trnsz 5000000 --gpu 1 --work 2 > logs/cnn_d11_k1_p0.100_e20_11.log &
+
+# nohup python3 train.py --name cnn_11_0.10-5e6-o --nn cnn --c_type sur --d 11 --k 1 --p 0.100 --epoch 20 --trnsz 5000000 --gpu 1 --work 2 > logs/cnn_d11_k1_p0.100_e20_11.log &
+# nohup python3 train.py --name cnn_11_0.10-1e7-o --nn cnn --c_type sur --d 11 --k 1 --p 0.100 --epoch 20 --trnsz 10000000 --gpu 1 --work 2 > logs/cnn_11_0.10-1e7-o.log &
+# nohup python3 train.py --name cnn_9_0.10-1e6 --nn cnn --c_type sur --d 9 --k 1 --p 0.100 --epoch 20 --trnsz 10000000 --gpu 2 --work 2 > logs/cnn_9_0.10-1e6.log &
+
+
+# nohup python3 train.py --name fnn_9_0.05-5e6 --nn fnn --c_type torc --d 9 --k 2 --p 0.05 --epoch 20 --trnsz 5000000 --gpu 3 --work 1 > logs/fnn_9_0.05-5e6_0.log &
+# nohup python3 train.py --name fnn_9_0.05-5e6-zip-lm2000 --nn fnn --zip 1 --c_type torc --d 9 --k 2 --p 0.05 --sym all --limit 2000 --epoch 20 --trnsz 5000000 --gpu 3 --work 1 > logs/fnn_9_0.05-5e6-zip-lm2000.log &
+
+# cnn 1e7
+# nohup python3 train.py --name cnn_3_0.10_1e7 --nn cnn --c_type sur --d 3 --k 1 --p 0.100 --epoch 20 --trnsz 10000000 --gpu 0 --work 2 > logs/cnn_3_0.10-1e7.log &
+# nohup python3 train.py --name cnn_5_0.10_1e7 --nn cnn --c_type sur --d 5 --k 1 --p 0.100 --epoch 20 --trnsz 10000000 --gpu 1 --work 2 > logs/cnn_5_0.10-1e7.log &
+# nohup python3 train.py --name cnn_7_0.10_1e7 --nn cnn --c_type sur --d 7 --k 1 --p 0.100 --epoch 20 --trnsz 10000000 --gpu 2 --work 2 > logs/cnn_7_0.10-1e7.log &
+# nohup python3 train.py --name cnn_9_0.10_1e7 --nn cnn --c_type sur --d 9 --k 1 --p 0.100 --epoch 20 --trnsz 10000000 --gpu 2 --work 2 > logs/cnn_9_0.10-1e7.log &
+# nohup python3 train.py --name cnn_11_0.10_1e7 --nn cnn --c_type sur --d 11 --k 1 --p 0.100 --epoch 20 --trnsz 10000000 --gpu 0 --work 2 > logs/cnn_11_0.10-1e7.log &
+# nohup python3 train.py --name cnn_13_0.10_1e7 --nn cnn --c_type sur --d 13 --k 1 --p 0.100 --epoch 20 --trnsz 10000000 --gpu 1 --work 2 > logs/cnn_13_0.10-1e7.log &

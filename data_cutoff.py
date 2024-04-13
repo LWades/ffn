@@ -21,3 +21,4 @@ log("Cut off... Done.")
 # python3 data_cutoff.py --c_type torc --d 3 --p 0.10 --poolsz 10000000 --trnsz 5000000
 # python3 data_cutoff.py --c_type torc --d 5 --p 0.07 --poolsz 10000000 --trnsz 5000000
 # python3 data_cutoff.py --c_type torc --d 3 --p 0.07 --poolsz 10000000 --trnsz 5000000
+# python3 data_cutoff.py --c_type torc --d 9 --p 0.05 --poolsz 10000000 --trnsz 5000000

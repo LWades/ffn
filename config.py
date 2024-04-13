@@ -49,7 +49,7 @@ def get_cnn_sur_7():
 def get_cnn_sur_9():
     config = ml_collections.ConfigDict()
     config.DL = 1
-    config.CL = 4
+    config.CL = 3
     config.N = 512
     return config
 
@@ -60,6 +60,13 @@ def get_cnn_sur_11():
     config.DL = 4
     config.CL = 2
     config.N = 512
+    return config
+
+def get_cnn_sur_13():
+    config = ml_collections.ConfigDict()
+    config.DL = 1
+    config.CL = 4
+    config.N = 1024
     return config
 
 # def get_cnn_sur_11():
@@ -89,3 +96,9 @@ def get_cnn_torc_9():
 def get_cnn_torc_11():
     pass
 
+
+def get_rnn_config():
+    config = ml_collections.ConfigDict()
+    config.layers = 16
+    config.hidden_size = 4
+    return config
