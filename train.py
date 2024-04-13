@@ -431,7 +431,7 @@ if __name__ == "__main__":
 # exit
 # nohup python3 train.py --name cnn_5_0.10_1e7 --nn cnn --c_type sur --d 5 --k 1 --p 0.100 --epoch 20 --trnsz 10000000 --gpu 1 --work 2 > logs/cnn_5_0.10-1e7.log &
 # nohup python3 train.py --name cnn_7_0.10_1e7 --nn cnn --c_type sur --d 7 --k 1 --p 0.100 --epoch 20 --trnsz 10000000 --gpu 0 --work 2 > logs/cnn_7_0.10-1e7.log &
-# exit
+# ing
 # nohup python3 train.py --name cnn_9_0.10_1e7 --nn cnn --c_type sur --d 9 --k 1 --p 0.100 --epoch 20 --trnsz 10000000 --gpu 2 --work 2 > logs/cnn_9_0.10-1e7.log &
 # exit
 # nohup python3 train.py --name cnn_11_0.10_1e7 --nn cnn --c_type sur --d 11 --k 1 --p 0.100 --epoch 20 --trnsz 10000000 --gpu 0 --work 2 > logs/cnn_11_0.10-1e7.log &
