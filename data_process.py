@@ -24,11 +24,18 @@ if args.nn == 'cnn':
     filename_test_data = '{}_pe/{}_d{}_p{}_trnsz{}_imgsdr_eval_seed1.hdf5'.format(args.c_type, args.c_type, args.d,
                                                                            format(args.p, '.3f'), args.testsz)
 
+if args.nn == 'rnn':
+    filename_train_data = '{}_base_pe/{}_d{}_p{}_trnsz{}'.format(args.c_type, args.c_type, args.d,
+                                                                       format(args.p, '.3f'), args.trnsz)
+    filename_test_data = '{}_base_pe/{}_d{}_p{}_trnsz{}_eval_seed1.hdf5'.format(args.c_type, args.c_type, args.d,
+                                                                       format(args.p, '.3f'), args.testsz)
+
 if args.zip != 1:
     filename_train_data = filename_train_data + "_seed{}.hdf5".format(args.seed)
 else:
     filename_train_data = filename_train_data + ".hdf5".format(args.seed)
 # /root/qecGPT/qec/trndt/toricode/torc_d3_0.010_trnsz10000000.npz
+
 
 
 class ToricDataset(Dataset):

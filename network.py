@@ -101,27 +101,26 @@ class CNN(nn.Module):
         self.dense_layers = nn.ModuleList()
 
         # 计算卷积层输出的维度以连接到全连接层
-        # self.conv_output_size = out_channels * (64 // 2 ** CL) * (64 // 2 ** CL)
-        # out_channels = 32 * (2 ** (CL - 1))
-        # feature_map_size = 64 // (2 ** (CL // 2))
-        # self.conv_output_size = out_channels * feature_map_size * feature_map_size
+        self.conv_output_size = out_channels * (64 // 2 ** CL) * (64 // 2 ** CL)
+        out_channels = 32 * (2 ** (CL - 1))
+        feature_map_size = 64 // (2 ** (CL // 2))
+        self.conv_output_size = out_channels * feature_map_size * feature_map_size
         # if args.d == 3:
         #     feature_map_size = 5
         #     self.conv_output_size = out_channels * feature_map_size * feature_map_size
         # else:
         #     feature_map_size = 2 * args.d - 1
         #     self.conv_output_size = out_channels * feature_map_size * feature_map_size
-        #     # self.conv_output_size = out_channels * (feature_map_size // 2 ** CL) * (feature_map_size // 2 ** CL)
 
         # # 根据池化层数量调整feature_map_size的计算
         # pooling_layers = (CL + 1) // 2  # 计算池化层的数量
         # feature_map_size = 64 // (2 ** pooling_layers)  # 调整尺寸计算以考虑池化层
 
-        pooling_layers = (CL + 1) // 2
-        feature_map_size = 2 * args.d - 1  # 根据d计算输入尺寸
-        for _ in range(pooling_layers):
-            feature_map_size = math.floor(feature_map_size / 2)
-        self.conv_output_size = out_channels * feature_map_size * feature_map_size
+        # pooling_layers = (CL + 1) // 2
+        # feature_map_size = 2 * args.d - 1  # 根据d计算输入尺寸
+        # for _ in range(pooling_layers):
+        #     feature_map_size = math.floor(feature_map_size / 2)
+        # self.conv_output_size = out_channels * feature_map_size * feature_map_size
 
         for i in range(DL):
             in_features = self.conv_output_size if i == 0 else N
@@ -141,6 +140,55 @@ class CNN(nn.Module):
 
         x = self.output_layer(x)
         return x
+
+# class CNN(nn.Module):
+#     def __init__(self, CL, DL, N, output_size):
+#         super(CNN, self).__init__()
+#
+#         self.conv_layers = nn.ModuleList()
+#         for i in range(CL):
+#             in_channels = 1 if i == 0 else 64
+#             # in_channels = 1 if i == 0 else 32 * (2 ** (i - 1))
+#             out_channels = 64
+#             # out_channels = 32 * (2 ** i)
+#             self.conv_layers.append(nn.Conv2d(in_channels, out_channels, kernel_size=3, padding=1))
+#             self.conv_layers.append(nn.ReLU())
+#             self.conv_layers.append(nn.BatchNorm2d(out_channels))
+#
+#             # if args.d > 3:
+#             #     self.conv_layers.append(nn.MaxPool2d(kernel_size=2, stride=2))
+#             # 每隔一层添加池化层
+#             if i % 2 == 1:  # 在每两个卷积层之后添加一个池化层
+#                 self.conv_layers.append(nn.MaxPool2d(kernel_size=2, stride=2))
+#
+#         self.flatten = nn.Flatten()
+#         self.dense_layers = nn.ModuleList()
+#
+#         pooling_layers = (CL + 1) // 2
+#         feature_map_size = 2 * args.d - 1  # 根据d计算输入尺寸
+#         for _ in range(pooling_layers):
+#             feature_map_size = math.floor(feature_map_size / 2)
+#         self.conv_output_size = out_channels * feature_map_size * feature_map_size
+#
+#         for i in range(DL):
+#             in_features = self.conv_output_size if i == 0 else N
+#             self.dense_layers.append(nn.Linear(in_features, N))
+#             self.dense_layers.append(nn.ReLU())
+#
+#         self.output_layer = nn.Linear(N, output_size)
+#
+#     def forward(self, x):
+#         for layer in self.conv_layers:
+#             x = layer(x)
+#
+#         x = self.flatten(x)
+#
+#         for layer in self.dense_layers:
+#             x = layer(x)
+#
+#         x = self.output_layer(x)
+#         return x
+
 
 
 class SimpleRNN(nn.Module):
@@ -201,6 +249,7 @@ def get_model():
     elif args.nn == 'rnn':
         log("init rnn...")
         model = RNN(input_size, config.hidden_size, 4, config.layers)
+        log("init rnn... Done.")
     return model
 
 
